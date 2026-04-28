@@ -1,0 +1,17 @@
+Support Agent: Green Valley Hospital. What do you want?
+Patient: Hi, good morning. I was hoping to reschedule my physiotherapy appointment for next week.
+Support Agent: You have to do that through the portal.
+Patient: I tried, but it wasn't letting me change the time. That is why I'm calling.
+Support Agent: Then try again later.
+Patient: Could you please check for me? I have an exam during my current appointment time.
+Support Agent: Look, I have other calls waiting. I can't sit and troubleshoot the portal for every patient.
+Patient: I understand you are busy, but I really do need help with this.
+Support Agent: Fine. What day.
+Patient: Any day next week after 3 PM would work.
+Support Agent: Nothing available.
+Patient: Are you sure? Could you double-check, please?
+Support Agent: I said nothing is available.
+Patient: Okay. Is there any other department that could help me?
+Support Agent: No idea. Not my problem.
+Patient: Alright. Thank you for your time.
+Support Agent: Mm-hmm.

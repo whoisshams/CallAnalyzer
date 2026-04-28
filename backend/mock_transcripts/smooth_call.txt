@@ -1,0 +1,17 @@
+Support Agent: Good morning, thank you for calling Green Valley Hospital. My name is Priya. How may I help you today?
+Patient: Good morning, Priya. I would like to book an appointment with a general physician, and I had a couple of questions if that's okay.
+Support Agent: Of course. I would be happy to help with both. Could you start by sharing your full name and date of birth?
+Patient: Sure. My name is Emily Carter, and my date of birth is August 12, 1991.
+Support Agent: Thank you, Ms. Carter. I have your record here. What questions can I help you with first?
+Patient: First, do I need to come fasting for the visit? And second, should I bring my medication list?
+Support Agent: Great questions. Fasting is not needed for a general check-up unless blood work is ordered on the day. It is very helpful to bring your current medication list, any recent test reports, and a valid photo ID.
+Patient: That is clear, thank you. When is the next available appointment?
+Support Agent: I have an opening tomorrow at 10:30 AM with Dr. Hughes, or Thursday at 2:15 PM with Dr. Patel.
+Patient: Thursday at 2:15 PM would be perfect.
+Support Agent: Wonderful. I have booked you with Dr. Patel this Thursday at 2:15 PM. You will receive a confirmation by text and email shortly.
+Patient: Thank you so much. One last thing, how early should I arrive?
+Support Agent: Please arrive about 15 minutes early to complete any paperwork. If you are feeling unwell before the appointment or your symptoms change, please give us a call and we will adjust as needed.
+Patient: That is really helpful. Thank you for being so patient and clear.
+Support Agent: You are very welcome. Is there anything else I can help you with today?
+Patient: No, that was everything.
+Support Agent: Thank you for calling Green Valley Hospital, Ms. Carter. Have a lovely day.

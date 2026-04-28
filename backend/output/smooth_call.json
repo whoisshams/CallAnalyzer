@@ -1,0 +1,28 @@
+{
+  "transcript_id": "smooth_call.txt",
+  "agent_tone_reviewer": {
+    "professionalism": 10,
+    "empathy": 8,
+    "clarity": 10,
+    "helpfulness": 10,
+    "de_escalation": 8,
+    "notes": "Excellent service with clear communication, thorough answers, and professional demeanor throughout the interaction."
+  },
+  "patient_tone_reviewer": {
+    "respectfulness": 10,
+    "clarity": 9,
+    "cooperation": 10,
+    "emotional_regulation": 10,
+    "escalation_intensity": 1,
+    "notes": "Patient was polite, well-prepared with questions, and expressed gratitude throughout the interaction."
+  },
+  "call_outcome_reviewer": {
+    "resolution_completeness": 10,
+    "next_step_clarity": 10,
+    "phi_compliance": 9,
+    "safety_risk": 1,
+    "escalation_necessity": 1,
+    "notes": "Excellent service. Agent provided complete information, clear next steps, and appropriate safety guidance. Only minor PHI concern with full DOB verification over phone."
+  },
+  "coordinator_summary": "An exemplary call on all dimensions. Agent Priya handled the interaction with consistent professionalism, clarity, and helpfulness \u2014 answering pre-visit questions accurately, offering two appointment slots, and providing clear arrival instructions. The patient (Emily Carter) was cooperative, respectful, and well-prepared, resulting in zero escalation pressure. The appointment was fully booked and confirmed, next steps were unambiguous, and no safety concerns arose. The only minor flag is the verbal collection of full date of birth without explicit identity-masking protocol, slightly affecting PHI compliance. No supervisor escalation was warranted. This call is a strong positive benchmark for QA training."
+}

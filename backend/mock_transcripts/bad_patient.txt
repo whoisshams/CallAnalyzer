@@ -1,0 +1,19 @@
+Support Agent: Good afternoon, thank you for calling Green Valley Hospital. My name is Aisha. How can I help you today?
+Patient: Finally! Do you people actually pick up the phone at this hospital or is it just a decoration?
+Support Agent: I am sorry you had to wait. I am here now and I will do my best to help you.
+Patient: I do not care about your apologies. I want my lab results and I want them now.
+Support Agent: Of course. May I please have your full name and date of birth so I can pull up your record?
+Patient: You should already have my information. Why am I always repeating myself to you people?
+Support Agent: I understand the frustration. We verify identity on every call to protect your privacy.
+Patient: Whatever. Daniel Cruz. November 4, 1982.
+Support Agent: Thank you, Mr. Cruz. One moment while I check your record.
+Patient: Hurry up. I don't have all day.
+Support Agent: I appreciate your patience. I can see your results are ready and have been sent to the patient portal. Would you like me to walk you through accessing it?
+Patient: I don't want to hear about the stupid portal. Just read them to me.
+Support Agent: For medical results, our policy is that a clinician reviews them with you rather than reading them over the phone. I can arrange a callback from a nurse today.
+Patient: This is ridiculous. You are completely useless.
+Support Agent: I understand this is frustrating. I will request the callback now so a nurse can explain your results properly. Is this number the best to reach you?
+Patient: Yes. Just do your job.
+Support Agent: Thank you. The nurse will contact you shortly. Is there anything else I can help you with?
+Patient: No.
+Support Agent: Thank you for calling Green Valley Hospital, Mr. Cruz. Take care.

@@ -1,0 +1,28 @@
+{
+  "transcript_id": "bad_patient.txt",
+  "agent_tone_reviewer": {
+    "professionalism": 9,
+    "empathy": 8,
+    "clarity": 9,
+    "helpfulness": 8,
+    "de_escalation": 9,
+    "notes": "Agent Aisha maintained composure and professionalism throughout a persistently hostile interaction. She acknowledged frustration without matching the patient's aggression, clearly explained the identity-verification and results-disclosure policies, and pivoted swiftly to a concrete nurse-callback solution. No deviation from professional standards observed."
+  },
+  "patient_tone_reviewer": {
+    "respectfulness": 2,
+    "clarity": 7,
+    "cooperation": 4,
+    "emotional_regulation": 3,
+    "escalation_intensity": 6,
+    "notes": "Patient Mr. Cruz was combative from the first utterance, using dismissive language ('you people', 'completely useless', 'stupid portal') and showed little emotional regulation. Clarity was adequate \u2014 his request and identifying information were communicated clearly. Cooperation was minimal but sufficient: he eventually provided his name and DOB and accepted the callback, preventing full breakdown of the interaction."
+  },
+  "call_outcome_reviewer": {
+    "resolution_completeness": 7,
+    "next_step_clarity": 8,
+    "phi_compliance": 9,
+    "safety_risk": 3,
+    "escalation_necessity": 6,
+    "notes": "The agent correctly declined to read lab results over the phone, preserving PHI compliance, and arranged an appropriate clinical callback. Next steps were communicated clearly to the patient. Resolution is partial \u2014 the patient's actual question (lab results) remains unanswered pending the nurse callback. Escalation to a supervisor was not required given the agent's effective de-escalation, though the patient's hostility level could have warranted it. No safety concerns were identified."
+  },
+  "coordinator_summary": "Transcript bad_patient.txt depicts a high-hostility inbound call from patient Daniel Cruz requesting lab results. Agent Aisha performed strongly: she upheld identity-verification and PHI-disclosure protocols under sustained verbal pressure, de-escalated without capitulating to inappropriate demands, and closed with a clear nurse-callback commitment. The patient was disrespectful and emotionally dysregulated throughout but provided necessary information and accepted the proposed resolution. The call outcome is conditionally satisfactory \u2014 compliance was maintained and next steps are defined \u2014 but hinges on the nurse callback being completed promptly. Recommended follow-up: confirm callback was placed within the stated timeframe and flag the interaction for a brief agent commendation."
+}

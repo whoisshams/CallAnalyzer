@@ -1,0 +1,28 @@
+{
+  "transcript_id": "bad_agent.txt",
+  "agent_tone_reviewer": {
+    "professionalism": 2,
+    "empathy": 1,
+    "clarity": 3,
+    "helpfulness": 2,
+    "de_escalation": 1,
+    "notes": "Extremely unprofessional greeting ('What do you want?'), dismissive attitude throughout, refused to provide adequate assistance, and showed no empathy for the patient's legitimate scheduling conflict. Repeatedly shut down the patient's requests with blunt non-answers and explicitly said the issue was 'not my problem'."
+  },
+  "patient_tone_reviewer": {
+    "respectfulness": 9,
+    "clarity": 8,
+    "cooperation": 9,
+    "emotional_regulation": 10,
+    "escalation_intensity": 1,
+    "notes": "Patient remained consistently polite, calm, and appreciative despite receiving dismissive and unhelpful responses throughout. Communicated the scheduling need clearly, explained the reason (exam conflict), and never raised their tone or became confrontational even when rebuffed multiple times."
+  },
+  "call_outcome_reviewer": {
+    "resolution_completeness": 2,
+    "next_step_clarity": 1,
+    "phi_compliance": 8,
+    "safety_risk": 4,
+    "escalation_necessity": 9,
+    "notes": "The patient's appointment rescheduling request was entirely unresolved. No alternative slots, departments, or escalation paths were offered. The agent's conduct warrants immediate supervisory review and coaching. No PHI was inappropriately disclosed, but the safety risk is elevated given the patient's inability to adjust a medical appointment around a known conflict."
+  },
+  "coordinator_summary": "This call represents a critical service failure. The support agent was rude from the first line ('What do you want?'), repeatedly deflected the patient's simple rescheduling request, refused to verify availability thoroughly, and offered zero alternatives or escalation paths. The patient, by contrast, was exemplary \u2014 patient, clear, polite, and non-confrontational throughout. The call ended entirely unresolved with no next steps provided. Immediate agent coaching and supervisory review are required; this transcript should be flagged for quality escalation."
+}
