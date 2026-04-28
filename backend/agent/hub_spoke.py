@@ -61,6 +61,17 @@ from tools.tool_patient_tone import analyze_patient_tone
 # 1. Wrap Python functions as SDK tools.
 #    Tools must be async and return MCP tool-result shape.
 # Tool description answers: "How do I call this tool correctly?"
+'''Status Code	Error Type
+400	BadRequestError
+401	AuthenticationError
+403	PermissionDeniedError
+404	NotFoundError
+422	UnprocessableEntityError
+429	RateLimitError
+>=500	InternalServerError
+N/A	APIConnectionError'''
+
+
 @tool(
     "analyze_agent_tone",
     (
@@ -77,7 +88,13 @@ from tools.tool_patient_tone import analyze_patient_tone
 )
 
 async def analyze_agent_tone_tool(args):
-    return {"content": [{"type": "text", "text": analyze_agent_tone(args["transcript"])}]}
+    transcript = args.get("transcript", "").strip()
+    if not transcript:
+        return {"content": [{"type": "text", "text": json.dumps({
+            "isError": True, "errorCategory": "validation", "isRetryable": False,
+            "context": {"attempted": "analyze_agent_tone", "reason": "transcript input was empty or missing"},
+        })}]}
+    return {"content": [{"type": "text", "text": analyze_agent_tone(transcript)}]}
 
 
 @tool(
@@ -95,7 +112,13 @@ async def analyze_agent_tone_tool(args):
     {"transcript": str},
 )
 async def analyze_patient_tone_tool(args):
-    return {"content": [{"type": "text", "text": analyze_patient_tone(args["transcript"])}]}
+    transcript = args.get("transcript", "").strip()
+    if not transcript:
+        return {"content": [{"type": "text", "text": json.dumps({
+            "isError": True, "errorCategory": "validation", "isRetryable": False,
+            "context": {"attempted": "analyze_patient_tone", "reason": "transcript input was empty or missing"},
+        })}]}
+    return {"content": [{"type": "text", "text": analyze_patient_tone(transcript)}]}
 
 
 @tool(
@@ -114,7 +137,13 @@ async def analyze_patient_tone_tool(args):
     {"transcript": str},
 )
 async def analyze_call_outcome_tool(args):
-    return {"content": [{"type": "text", "text": analyze_call_outcome(args["transcript"])}]}
+    transcript = args.get("transcript", "").strip()
+    if not transcript:
+        return {"content": [{"type": "text", "text": json.dumps({
+            "isError": True, "errorCategory": "validation", "isRetryable": False,
+            "context": {"attempted": "analyze_call_outcome", "reason": "transcript input was empty or missing"},
+        })}]}
+    return {"content": [{"type": "text", "text": analyze_call_outcome(transcript)}]}
 
 
 # 2. Host the tools in a local MCP server.
@@ -214,6 +243,17 @@ async def validate_tool_output(hook_input: dict[str, Any], *_: Any) -> dict[str,
         data = json.loads(raw_text) if raw_text else None
     except json.JSONDecodeError as exc:
         return _hook_feedback(f"{reviewer} output was not valid JSON: {exc}")
+
+    # Detect structured error returned by the tool (e.g. API failure, timeout).
+    if isinstance(data, dict) and data.get("isError"):
+        category = data.get("errorCategory", "unknown")
+        retryable = data.get("isRetryable", False)
+        context = data.get("context", {})
+        retry_msg = "Retry the tool call once." if retryable else "Do not retry — escalate or skip this reviewer."
+        return _hook_feedback(
+            f"{reviewer} tool failed (errorCategory={category}, isRetryable={retryable}). "
+            f"Context: {context}. {retry_msg}"
+        )
 
     # Validate the shape.
     error = validate_reviewer(reviewer, data)
