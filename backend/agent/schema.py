@@ -39,33 +39,27 @@ REVIEWER_FIELDS = {
 }
 
 
-# the parameters are of any type
 def validate_reviewer(reviewer_key, payload):
     """Check one reviewer block."""
     if reviewer_key not in REVIEWER_FIELDS:
         return f"unknown reviewer '{reviewer_key}'"
     
-    #checks if the payload is a dictionary
     if not isinstance(payload, dict):
         return f"{reviewer_key} must be a JSON object"
 
-    # this is for the fields in the reviewer_key
     for field in REVIEWER_FIELDS[reviewer_key]:
         if field not in payload:
             return f"{reviewer_key}.{field} is missing"
 
         value = payload[field]
-        #checks if the value is a boolean
+        # bool is a subclass of int in Python, so True/False would pass the isinstance(int) check below without this guard.
         if isinstance(value, bool):
             return f"{reviewer_key}.{field} must be an integer from 1 to 10"
-        #checks if the value is an integer
         if not isinstance(value, int):
             return f"{reviewer_key}.{field} must be an integer from 1 to 10"
-        #checks if the value is between 1 and 10
         if value < 1 or value > 10:
             return f"{reviewer_key}.{field} must be an integer from 1 to 10"
-    # this is for the notes field. It is separate because it 
-    # follows different validation rules than the other fields.
+    # notes is validated separately because it follows different rules (non-empty string, not a scored int).
     if "notes" not in payload:
         return f"{reviewer_key}.notes is missing"
 
@@ -73,7 +67,6 @@ def validate_reviewer(reviewer_key, payload):
 
     if not isinstance(notes, str):
         return f"{reviewer_key}.notes must be a non-empty string"
-    #checks if the notes is a non-empty string
     if not notes.strip():
         return f"{reviewer_key}.notes must be a non-empty string"
 
@@ -106,13 +99,14 @@ def validate_report(data):
         return "coordinator_summary must be a non-empty string"
 
     for reviewer_key in REVIEWER_FIELDS:
+        if data[reviewer_key] is None:
+            continue  # reviewer failed — null is acceptable
         error = validate_reviewer(reviewer_key, data[reviewer_key])
         if error:
             return error
 
     return None
 
-# this is for the reviewer_key
 def build_reviewer_schema(reviewer_key):
     """Build the JSON schema for one reviewer block."""
     fields = REVIEWER_FIELDS[reviewer_key]
@@ -133,14 +127,18 @@ def build_reviewer_schema(reviewer_key):
     properties["notes"] = {"type": "string"}
 
     return {
-        "type": "object",
-        "required": required_fields,
-        "properties": properties,
-        "additionalProperties": False,
+        "oneOf": [
+            {
+                "type": "object",
+                "required": required_fields,
+                "properties": properties,
+                "additionalProperties": False,
+            },
+            {"type": "null"},
+        ]
     }
 
-# this is for the JSON schema used by the coordinator's `output_format`.
-# It tells the model what the final JSON should look like.
+# Passed to the coordinator's output_format; enforces additionalProperties=False so the model can't add undeclared fields.
 JSON_SCHEMA = {
     "type": "object",
     "required": [
@@ -156,6 +154,10 @@ JSON_SCHEMA = {
         "patient_tone_reviewer": build_reviewer_schema("patient_tone_reviewer"),
         "call_outcome_reviewer": build_reviewer_schema("call_outcome_reviewer"),
         "coordinator_summary": {"type": "string"},
+        "reviewer_errors": {
+            "type": "object",
+            "description": "Present only when one or more reviewers failed.",
+        },
     },
     "additionalProperties": False,
 }

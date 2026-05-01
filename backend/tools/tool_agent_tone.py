@@ -27,8 +27,8 @@ def analyze_agent_tone(transcript: str) -> str:
                 "helpfulness (int 1-10): how effectively the agent addressed the patient's needs; "
                 "1=unhelpful or incorrect, 10=fully resolved the issue. "
                 "de_escalation (int 1-10): ability to calm tension; "
-                "score 5 if no tension was present, 1=made situation worse, 10=fully de-escalated. "
-                "notes (non-empty string): one sentence summarizing the agent's overall performance. "
+                "1=made situation worse, 5=no tension present or tension unchanged, 10=fully de-escalated. "
+                "notes (string, 10-30 words): one sentence citing the single most significant outcome or unresolved issue from the call. "
                 "If the agent has no dialogue in the transcript, score all fields 1 and set "
                 "notes to 'No agent speech found.'"
             ),
@@ -41,7 +41,7 @@ def analyze_agent_tone(transcript: str) -> str:
         )
         text_blocks = [b.text for b in response.content if b.type == "text"]
         return "".join(text_blocks).strip()
-
+    # API failures (rate limit, timeout, auth)
     except anthropic.AuthenticationError:
         return json.dumps({"isError": True, "errorCategory": "auth", "isRetryable": False,
                            "context": {"attempted": "analyze_agent_tone", "reason": "Invalid or missing API key"}})

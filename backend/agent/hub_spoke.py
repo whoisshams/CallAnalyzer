@@ -78,7 +78,7 @@ N/A	APIConnectionError'''
         "Analyze ONLY the support agent's behavior in a hospital call transcript. "
         "Input: raw transcript text with speaker turns (e.g. 'Agent: ... Patient: ...'). "
         "Do NOT pass an empty string. Do NOT use this tool to assess the patient. "
-        "Returns a JSON object with integer scores 1–10 for: professionalism, empathy, "
+        "Output: Returns a JSON object with integer scores 1–10 for: professionalism, empathy, "
         "clarity, helpfulness, de_escalation, and a non-empty 'notes' string. "
         "Example output: {\"professionalism\": 8, \"empathy\": 7, \"clarity\": 9, "
         "\"helpfulness\": 8, \"de_escalation\": 6, \"notes\": \"Agent stayed calm.\"}. "
@@ -90,6 +90,7 @@ N/A	APIConnectionError'''
 async def analyze_agent_tone_tool(args):
     transcript = args.get("transcript", "").strip()
     if not transcript:
+        # Empty transcript (bad input)
         return {"content": [{"type": "text", "text": json.dumps({
             "isError": True, "errorCategory": "validation", "isRetryable": False,
             "context": {"attempted": "analyze_agent_tone", "reason": "transcript input was empty or missing"},
@@ -163,6 +164,7 @@ qa_server = create_sdk_mcp_server(
 # Agent prompt answers: "What is my job in this session?"
 agents = {
     "agent_tone_reviewer": AgentDefinition(
+        model="claude-haiku-3-5",  # haiku is sufficient: call one tool, return result
         description=(
             "QA reviewer responsible ONLY for the support agent's tone. "
             "Scores professionalism, empathy, clarity, helpfulness, and de-escalation. "
@@ -178,6 +180,7 @@ agents = {
         tools=["mcp__qa_tools__analyze_agent_tone"],
     ),
     "patient_tone_reviewer": AgentDefinition(
+        model="claude-haiku-3-5",  # haiku is sufficient: call one tool, return result
         description=(
             "QA reviewer responsible ONLY for the patient's tone. "
             "Scores respectfulness, clarity, cooperation, emotional regulation, and escalation intensity. "
@@ -193,6 +196,7 @@ agents = {
         tools=["mcp__qa_tools__analyze_patient_tone"],
     ),
     "call_outcome_reviewer": AgentDefinition(
+        model="claude-haiku-3-5",  # haiku is sufficient: call one tool, return result
         description=(
             "QA reviewer responsible for the overall call outcome and compliance. "
             "Scores resolution completeness, next-step clarity, PHI compliance, safety risk, "
@@ -220,8 +224,8 @@ TOOL_TO_REVIEWER = {
     "mcp__qa_tools__analyze_call_outcome": "call_outcome_reviewer",
 }
 
-# gets the text from the tool response
 def _get_tool_text(tool_response: Any) -> str:
+    # MCP tool responses wrap content in {"content": [{"type": "text", "text": "..."}]}.
     if not isinstance(tool_response, dict):
         return ""
     parts = []
@@ -230,7 +234,6 @@ def _get_tool_text(tool_response: Any) -> str:
             parts.append(item.get("text") or "")
     return "\n".join(parts).strip()
 
-# checks if the tool output is not valid json
 async def validate_tool_output(hook_input: dict[str, Any], *_: Any) -> dict[str, Any]:
     reviewer = TOOL_TO_REVIEWER.get(hook_input.get("tool_name"))
     if not reviewer:
@@ -238,7 +241,6 @@ async def validate_tool_output(hook_input: dict[str, Any], *_: Any) -> dict[str,
 
     raw_text = _get_tool_text(hook_input.get("tool_response"))
 
-    # Try to parse as JSON.
     try:
         data = json.loads(raw_text) if raw_text else None
     except json.JSONDecodeError as exc:
@@ -255,14 +257,12 @@ async def validate_tool_output(hook_input: dict[str, Any], *_: Any) -> dict[str,
             f"Context: {context}. {retry_msg}"
         )
 
-    # Validate the shape.
     error = validate_reviewer(reviewer, data)
     if error:
         return _hook_feedback(f"{reviewer} JSON is invalid: {error}")
 
-    return {}
+    return {}  # empty dict = accept the result, no feedback to the subagent
 
-# this is for the hook_feedback when json is not valid
 def _hook_feedback(message: str) -> dict[str, Any]:
     return {
         "hookSpecificOutput": {
@@ -279,21 +279,24 @@ def _hook_feedback(message: str) -> dict[str, Any]:
 #    - `agents={...}` auto-enables the built-in Task tool.
 #    - `output_format=json_schema` forces the final answer to be valid JSON.
 options = ClaudeAgentOptions(
+    model="claude-sonnet-4-20250514",  # pin coordinator; prevents SDK defaulting to claude-sonnet-4-6
     system_prompt=(
         "You coordinate hospital call QA. In one response, issue Task calls to "
         "agent_tone_reviewer, patient_tone_reviewer, and call_outcome_reviewer "
         "in parallel. Then return ONE final JSON object matching the required schema. "
-        "Use the `transcript_id` given in the user prompt."
+        "Use the `transcript_id` given in the user prompt. "
+        "If a reviewer fails, set that reviewer's field to null and record the error reason "
+        "in reviewer_errors as {\"<reviewer_name>\": \"<reason>\"}."
     ),
     output_format={"type": "json_schema", "schema": JSON_SCHEMA},
     mcp_servers={"qa_tools": qa_server},
-    agents=agents,
-    allowed_tools=["Task"],
-    permission_mode="bypassPermissions",
+    agents=agents,  # passing agents= enables the SDK's built-in Task tool on the coordinator
+    allowed_tools=["Task"],  # restrict coordinator to delegation only — no direct tool calls
+    permission_mode="bypassPermissions",  # subagents call tools without interactive approval prompts
     hooks={
         "PostToolUse": [
             HookMatcher(
-                matcher="|".join(TOOL_TO_REVIEWER.keys()),
+                matcher="|".join(TOOL_TO_REVIEWER.keys()),  # pipe-delimited OR-pattern across all three tool names
                 hooks=[validate_tool_output],
                 timeout=30.0,
             )
@@ -317,6 +320,7 @@ async def _run_coordinator(prompt: str) -> dict[str, Any]:
     async for message in query(prompt=prompt, options=options):
         if session_id is None:
             session_id = getattr(message, "session_id", None)
+        # SDK populates structured_output (not text) when output_format=json_schema is set.
         candidate = getattr(message, "structured_output", None)
         if isinstance(candidate, dict):
             structured = candidate

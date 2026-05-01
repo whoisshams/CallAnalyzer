@@ -25,10 +25,10 @@ def analyze_patient_tone(transcript: str) -> str:
                 "cooperation (int 1-10): willingness to follow agent instructions and provide needed information; "
                 "1=completely uncooperative, 10=fully cooperative. "
                 "emotional_regulation (int 1-10): ability to manage emotions during the call; "
-                "1=highly dysregulated or volatile, 10=calm and composed throughout. "
+                "1=highly dysregulated or volatile, 5=occasional emotional outbursts but mostly manageable, 10=calm and composed throughout. "
                 "escalation_intensity (int 1-10): degree to which the patient escalated tension; "
-                "1=no escalation at all, 10=extreme escalation. "
-                "notes (non-empty string): one sentence summarizing the patient's overall behavior. "
+                "1=no escalation at all, 5=repeated complaints or raised voice but no threats, 10=extreme escalation. "
+                "notes (string, 10-30 words): one sentence citing the single most significant outcome or unresolved issue from the call. "
                 "If the patient has no dialogue in the transcript, score all fields 1 and set "
                 "notes to 'No patient speech found.'"
             ),

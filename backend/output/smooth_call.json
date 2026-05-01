@@ -5,24 +5,24 @@
     "empathy": 8,
     "clarity": 10,
     "helpfulness": 10,
-    "de_escalation": 8,
-    "notes": "Excellent service with clear communication, thorough answers, and professional demeanor throughout the interaction."
+    "de_escalation": 5,
+    "notes": "The agent demonstrated excellent professional conduct with clear communication, thoroughly addressed all patient questions, and provided comprehensive helpful information throughout the interaction. De-escalation scored at midpoint as no tense situation arose requiring that skill to be exercised."
   },
   "patient_tone_reviewer": {
     "respectfulness": 10,
-    "clarity": 9,
+    "clarity": 10,
     "cooperation": 10,
     "emotional_regulation": 10,
     "escalation_intensity": 1,
-    "notes": "Patient was polite, well-prepared with questions, and expressed gratitude throughout the interaction."
+    "notes": "The patient was exceptionally polite, clearly communicated their needs, fully cooperated with all requests, remained calm throughout, and showed no signs of escalation whatsoever."
   },
   "call_outcome_reviewer": {
     "resolution_completeness": 10,
     "next_step_clarity": 10,
-    "phi_compliance": 9,
+    "phi_compliance": 10,
     "safety_risk": 1,
     "escalation_necessity": 1,
-    "notes": "Excellent service. Agent provided complete information, clear next steps, and appropriate safety guidance. Only minor PHI concern with full DOB verification over phone."
+    "notes": "Patient successfully scheduled appointment and received clear answers to all questions with appropriate follow-up instructions provided. No PHI breach detected, no safety concerns, and no escalation was necessary."
   },
-  "coordinator_summary": "An exemplary call on all dimensions. Agent Priya handled the interaction with consistent professionalism, clarity, and helpfulness \u2014 answering pre-visit questions accurately, offering two appointment slots, and providing clear arrival instructions. The patient (Emily Carter) was cooperative, respectful, and well-prepared, resulting in zero escalation pressure. The appointment was fully booked and confirmed, next steps were unambiguous, and no safety concerns arose. The only minor flag is the verbal collection of full date of birth without explicit identity-masking protocol, slightly affecting PHI compliance. No supervisor escalation was warranted. This call is a strong positive benchmark for QA training."
+  "coordinator_summary": "This was an exemplary call with no friction points. Agent Priya handled the interaction with full professionalism, clear and accurate guidance, and a warm closing. The patient (Emily Carter) was cooperative, calm, and articulate throughout. The appointment was successfully booked with Dr. Patel for Thursday at 2:15 PM, confirmation methods communicated, and pre-visit instructions (arrival time, documents to bring, fasting guidance) were proactively offered. PHI was collected appropriately and no safety or escalation concerns were present. The only non-perfect score is de_escalation (5) for the agent, reflecting that no adversarial scenario arose to demonstrate that competency \u2014 not a deficiency. Overall, this call is a strong benchmark example for training purposes."
 }
