@@ -6,23 +6,23 @@
     "clarity": 9,
     "helpfulness": 8,
     "de_escalation": 9,
-    "notes": "The agent maintained excellent professionalism throughout an aggressive interaction, clearly explained policies and procedures, and successfully de-escalated tension while providing appropriate alternative solutions."
+    "notes": "Agent maintained composure and professionalism while arranging appropriate nurse callback for lab results review."
   },
   "patient_tone_reviewer": {
     "respectfulness": 2,
     "clarity": 7,
     "cooperation": 4,
-    "emotional_regulation": 2,
+    "emotional_regulation": 3,
     "escalation_intensity": 7,
-    "notes": "Patient displayed consistently hostile and impatient behavior throughout the call, using dismissive language and insults while eventually providing required information."
+    "notes": "Patient was hostile throughout but eventually provided information needed for nurse callback regarding lab results."
   },
   "call_outcome_reviewer": {
     "resolution_completeness": 6,
-    "next_step_clarity": 7,
+    "next_step_clarity": 8,
     "phi_compliance": 9,
     "safety_risk": 2,
     "escalation_necessity": 3,
-    "notes": "Patient's lab results inquiry was partially resolved with a nurse callback arranged, though the patient remained frustrated throughout the interaction."
+    "notes": "Patient received clear next steps for nurse callback but remained frustrated with inability to get immediate results."
   },
-  "coordinator_summary": "Transcript bad_patient.txt captures a highly hostile patient (Mr. Daniel Cruz) demanding lab results over the phone. Agent Aisha performed exemplarily \u2014 remaining composed, upholding identity-verification and results-disclosure policies, and arranging a nurse callback as a compliant alternative. The patient was consistently disrespectful, used dismissive language, and issued a personal insult (\"completely useless\"), yet ultimately cooperated enough to confirm contact details. The call achieved a partial resolution: the underlying request (lab results) was not fulfilled on the call per policy, but a concrete next step (nurse callback) was clearly communicated. PHI was well-protected; no safety risk was identified and escalation to a supervisor was not required. Primary coaching opportunity is for the patient experience team to consider proactive portal onboarding to reduce this class of escalation."
+  "coordinator_summary": "This call demonstrates excellent agent performance under difficult circumstances. Agent Aisha maintained professionalism and empathy while dealing with an agitated patient who demanded immediate lab results. The agent appropriately followed hospital protocol by arranging a nurse callback instead of reading results over the phone, ensuring proper clinical review. Despite the patient's hostility and verbal abuse, the agent successfully de-escalated tensions and secured agreement for the callback. PHI compliance was excellent with proper identity verification. The interaction shows effective boundary-setting while remaining supportive."
 }

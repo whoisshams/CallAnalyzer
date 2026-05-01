@@ -6,7 +6,7 @@
     "clarity": 3,
     "helpfulness": 2,
     "de_escalation": 2,
-    "notes": "Agent was dismissive and rude throughout, failing to provide adequate assistance for rescheduling appointment."
+    "notes": "Agent was dismissive, rude, and unhelpful throughout the call, failing to provide adequate customer service."
   },
   "patient_tone_reviewer": {
     "respectfulness": 9,
@@ -14,15 +14,15 @@
     "cooperation": 10,
     "emotional_regulation": 10,
     "escalation_intensity": 1,
-    "notes": "Patient remained polite and cooperative despite receiving unhelpful and dismissive responses from support agent."
+    "notes": "Patient remained polite and composed despite unhelpful agent, but appointment rescheduling issue remains unresolved."
   },
   "call_outcome_reviewer": {
-    "resolution_completeness": 1,
+    "resolution_completeness": 2,
     "next_step_clarity": 1,
     "phi_compliance": 10,
     "safety_risk": 1,
     "escalation_necessity": 8,
-    "notes": "Patient's scheduling issue remained completely unresolved due to unprofessional and dismissive support agent behavior."
+    "notes": "Patient's scheduling issue remained unresolved due to unprofessional and dismissive agent behavior."
   },
-  "coordinator_summary": "This call represents a serious service failure. The support agent opened with \"What do you want?\" \u2014 an immediately unprofessional greeting \u2014 and maintained a dismissive, unhelpful posture throughout: deflecting to the portal without verifying the patient's reported issue, refusing to check availability thoroughly, and responding to a request for alternative help with \"Not my problem.\" No appointment was rescheduled, no next steps were offered, and the patient was left with zero resolution. In stark contrast, the patient was a model caller: polite, clear, patient, and never escalatory despite repeated brush-offs. PHI was not disclosed, and no safety risk was identified. Immediate supervisory review and targeted coaching for the support agent is strongly recommended, along with a follow-up to ensure the patient's rescheduling need is addressed."
+  "coordinator_summary": "This call represents a significant service failure. The support agent demonstrated extremely poor professionalism (score: 2/10), showing no empathy (1/10) and minimal helpfulness (2/10). The agent was dismissive from the opening (\"What do you want?\"), refused to assist with portal troubleshooting, and ended with unprofessional responses like \"Not my problem.\" In stark contrast, the patient maintained exceptional composure (10/10 emotional regulation) and cooperation (10/10) despite receiving poor service. The patient's simple rescheduling request went completely unresolved (2/10 resolution), with no clear next steps provided (1/10). This interaction requires immediate escalation (8/10 necessity) for management review and agent coaching."
 }

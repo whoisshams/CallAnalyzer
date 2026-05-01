@@ -88,6 +88,7 @@ N/A	APIConnectionError'''
 )
 
 async def analyze_agent_tone_tool(args):
+    print("  -> analyze_agent_tone called", flush=True)
     transcript = args.get("transcript", "").strip()
     if not transcript:
         # Empty transcript (bad input)
@@ -113,6 +114,7 @@ async def analyze_agent_tone_tool(args):
     {"transcript": str},
 )
 async def analyze_patient_tone_tool(args):
+    print("  -> analyze_patient_tone called", flush=True)
     transcript = args.get("transcript", "").strip()
     if not transcript:
         return {"content": [{"type": "text", "text": json.dumps({
@@ -138,6 +140,7 @@ async def analyze_patient_tone_tool(args):
     {"transcript": str},
 )
 async def analyze_call_outcome_tool(args):
+    print("  -> analyze_call_outcome called", flush=True)
     transcript = args.get("transcript", "").strip()
     if not transcript:
         return {"content": [{"type": "text", "text": json.dumps({
@@ -165,6 +168,7 @@ qa_server = create_sdk_mcp_server(
 agents = {
     "agent_tone_reviewer": AgentDefinition(
         model="claude-haiku-3-5",  # haiku is sufficient: call one tool, return result
+        maxTurns=3,  # safety cap: stop retrying after 3 attempts
         description=(
             "QA reviewer responsible ONLY for the support agent's tone. "
             "Scores professionalism, empathy, clarity, helpfulness, and de-escalation. "
@@ -181,6 +185,7 @@ agents = {
     ),
     "patient_tone_reviewer": AgentDefinition(
         model="claude-haiku-3-5",  # haiku is sufficient: call one tool, return result
+        maxTurns=3,  # safety cap: stop retrying after 3 attempts
         description=(
             "QA reviewer responsible ONLY for the patient's tone. "
             "Scores respectfulness, clarity, cooperation, emotional regulation, and escalation intensity. "
@@ -197,6 +202,7 @@ agents = {
     ),
     "call_outcome_reviewer": AgentDefinition(
         model="claude-haiku-3-5",  # haiku is sufficient: call one tool, return result
+        maxTurns=3,  # safety cap: stop retrying after 3 attempts
         description=(
             "QA reviewer responsible for the overall call outcome and compliance. "
             "Scores resolution completeness, next-step clarity, PHI compliance, safety risk, "
@@ -225,11 +231,15 @@ TOOL_TO_REVIEWER = {
 }
 
 def _get_tool_text(tool_response: Any) -> str:
-    # MCP tool responses wrap content in {"content": [{"type": "text", "text": "..."}]}.
-    if not isinstance(tool_response, dict):
+    # The SDK delivers tool_response as a bare list of content items, not wrapped in a dict.
+    if isinstance(tool_response, list):
+        items = tool_response
+    elif isinstance(tool_response, dict):
+        items = tool_response.get("content") or []
+    else:
         return ""
     parts = []
-    for item in tool_response.get("content") or []:
+    for item in items:
         if isinstance(item, dict) and item.get("type") == "text":
             parts.append(item.get("text") or "")
     return "\n".join(parts).strip()
@@ -239,7 +249,11 @@ async def validate_tool_output(hook_input: dict[str, Any], *_: Any) -> dict[str,
     if not reviewer:
         return {}
 
+    print(f"  [hook] {reviewer} hook_input keys: {list(hook_input.keys())}", flush=True)
+    print(f"  [hook] {reviewer} tool_response type: {type(hook_input.get('tool_response')).__name__}", flush=True)
+    print(f"  [hook] {reviewer} tool_response: {hook_input.get('tool_response')!r}", flush=True)
     raw_text = _get_tool_text(hook_input.get("tool_response"))
+    print(f"  [hook] {reviewer} extracted raw_text: {raw_text!r}", flush=True)
 
     try:
         data = json.loads(raw_text) if raw_text else None
@@ -339,6 +353,8 @@ async def process_transcript(file_path: Path) -> None:
     if not transcript:
         print(f"{file_path.name}: skipped (empty file)")
         return
+
+    print(f"\nProcessing {file_path.name}...", flush=True)
 
     prompt = (
         f"TRANSCRIPT_ID: {file_path.name}\n"

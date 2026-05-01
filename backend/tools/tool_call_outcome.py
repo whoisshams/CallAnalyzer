@@ -12,6 +12,7 @@ def analyze_call_outcome(transcript: str) -> str:
     try:
         response = client.messages.create(
             model="claude-sonnet-4-20250514",
+            maxTurns=3,
             max_tokens=700,
             system=(
                 "You are a hospital QA reviewer assessing the overall outcome of the entire call. "

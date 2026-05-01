@@ -11,6 +11,7 @@ def analyze_agent_tone(transcript: str) -> str:
     try:
         response = client.messages.create(
             model="claude-sonnet-4-20250514",
+            maxTurns=3,
             max_tokens=700,
             system=(
                 "You are a hospital QA reviewer scoring ONLY the support agent's behavior. "
@@ -54,3 +55,4 @@ def analyze_agent_tone(transcript: str) -> str:
     except anthropic.APIError as exc:
         return json.dumps({"isError": True, "errorCategory": "api_error", "isRetryable": False,
                            "context": {"attempted": "analyze_agent_tone", "reason": str(exc)}})
+
