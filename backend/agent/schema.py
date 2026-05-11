@@ -38,7 +38,7 @@ REVIEWER_FIELDS = {
     ],
 }
 
-
+# validate_reviewer checks if the reviewer block is valid
 def validate_reviewer(reviewer_key, payload):
     """Check one reviewer block."""
     if reviewer_key not in REVIEWER_FIELDS:
@@ -72,7 +72,7 @@ def validate_reviewer(reviewer_key, payload):
 
     return None
 
-
+# data is a dictionary containing the final report
 def validate_report(data):
     """Check the full final report."""
     if not isinstance(data, dict):
@@ -106,7 +106,7 @@ def validate_report(data):
             return error
 
     return None
-
+# build_reviewer_schema builds the JSON schema for one reviewer block
 def build_reviewer_schema(reviewer_key):
     """Build the JSON schema for one reviewer block."""
     fields = REVIEWER_FIELDS[reviewer_key]

@@ -3,26 +3,26 @@
   "agent_tone_reviewer": {
     "professionalism": 2,
     "empathy": 1,
-    "clarity": 3,
-    "helpfulness": 2,
-    "de_escalation": 2,
-    "notes": "Agent was dismissive, rude, and unhelpful throughout the call, failing to provide adequate customer service."
+    "clarity": 6,
+    "helpfulness": 1,
+    "de_escalation": 1,
+    "notes": "Agent dismissed patient's legitimate scheduling conflict, refused to troubleshoot portal issue, and failed to redirect to alternative resources."
   },
   "patient_tone_reviewer": {
     "respectfulness": 9,
     "clarity": 9,
     "cooperation": 10,
-    "emotional_regulation": 10,
+    "emotional_regulation": 9,
     "escalation_intensity": 1,
-    "notes": "Patient remained polite and composed despite unhelpful agent, but appointment rescheduling issue remains unresolved."
+    "notes": "Patient remained calm and polite throughout; unable to reschedule physiotherapy appointment due to lack of availability after 3 PM."
   },
   "call_outcome_reviewer": {
-    "resolution_completeness": 2,
+    "resolution_completeness": 1,
     "next_step_clarity": 1,
-    "phi_compliance": 10,
+    "phi_compliance": 9,
     "safety_risk": 1,
     "escalation_necessity": 8,
-    "notes": "Patient's scheduling issue remained unresolved due to unprofessional and dismissive agent behavior."
+    "notes": "Patient's appointment reschedule request completely unresolved; agent dismissive and unhelpful throughout call."
   },
-  "coordinator_summary": "This call represents a significant service failure. The support agent demonstrated extremely poor professionalism (score: 2/10), showing no empathy (1/10) and minimal helpfulness (2/10). The agent was dismissive from the opening (\"What do you want?\"), refused to assist with portal troubleshooting, and ended with unprofessional responses like \"Not my problem.\" In stark contrast, the patient maintained exceptional composure (10/10 emotional regulation) and cooperation (10/10) despite receiving poor service. The patient's simple rescheduling request went completely unresolved (2/10 resolution), with no clear next steps provided (1/10). This interaction requires immediate escalation (8/10 necessity) for management review and agent coaching."
+  "coordinator_summary": "Call outcome: FAILED. Patient made a reasonable request to reschedule a physiotherapy appointment due to an exam conflict. Despite patient maintaining exemplary composure and politeness throughout, the support agent demonstrated extremely poor customer service: refused to assist with portal troubleshooting, provided no alternative solutions, and dismissed the patient's legitimate need. The call resulted in zero resolution and high escalation necessity (8/10). Agent performance across professionalism, empathy, helpfulness, and de-escalation was critically deficient. This interaction requires management review and potential training intervention."
 }

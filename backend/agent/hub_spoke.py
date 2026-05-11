@@ -167,7 +167,7 @@ qa_server = create_sdk_mcp_server(
 # Agent prompt answers: "What is my job in this session?"
 agents = {
     "agent_tone_reviewer": AgentDefinition(
-        model="claude-haiku-3-5",  # haiku is sufficient: call one tool, return result
+        model="claude-haiku-4-5-20251001",  # haiku is sufficient: call one tool, return result
         maxTurns=3,  # safety cap: stop retrying after 3 attempts
         description=(
             "QA reviewer responsible ONLY for the support agent's tone. "
@@ -184,7 +184,7 @@ agents = {
         tools=["mcp__qa_tools__analyze_agent_tone"],
     ),
     "patient_tone_reviewer": AgentDefinition(
-        model="claude-haiku-3-5",  # haiku is sufficient: call one tool, return result
+        model="claude-haiku-4-5-20251001",  # haiku is sufficient: call one tool, return result
         maxTurns=3,  # safety cap: stop retrying after 3 attempts
         description=(
             "QA reviewer responsible ONLY for the patient's tone. "
@@ -201,7 +201,7 @@ agents = {
         tools=["mcp__qa_tools__analyze_patient_tone"],
     ),
     "call_outcome_reviewer": AgentDefinition(
-        model="claude-haiku-3-5",  # haiku is sufficient: call one tool, return result
+        model="claude-haiku-4-5-20251001",  # haiku is sufficient: call one tool, return result
         maxTurns=3,  # safety cap: stop retrying after 3 attempts
         description=(
             "QA reviewer responsible for the overall call outcome and compliance. "
@@ -291,9 +291,11 @@ def _hook_feedback(message: str) -> dict[str, Any]:
 
 # 5. Coordinator (hub) configuration.
 #    - `agents={...}` auto-enables the built-in Task tool.
-#    - `output_format=json_schema` forces the final answer to be valid JSON.
+#Agent SDK structured output     → output_format=json_schema
+#Messages API structured output  → forced tool_use
+
 options = ClaudeAgentOptions(
-    model="claude-sonnet-4-20250514",  # pin coordinator; prevents SDK defaulting to claude-sonnet-4-6
+    model="claude-haiku-4-5-20251001",  # pin coordinator; prevents SDK defaulting to claude-sonnet-4-6
     system_prompt=(
         "You coordinate hospital call QA. In one response, issue Task calls to "
         "agent_tone_reviewer, patient_tone_reviewer, and call_outcome_reviewer "
@@ -331,7 +333,8 @@ async def _run_coordinator(prompt: str) -> dict[str, Any]:
     """
     structured = None
     session_id = None
-    async for message in query(prompt=prompt, options=options):
+    async for message in query(prompt=prompt, options=options):# options contains the coordinator agent definition
+        print(f"\n[coordinator message] type={type(message).__name__} | {message}")
         if session_id is None:
             session_id = getattr(message, "session_id", None)
         # SDK populates structured_output (not text) when output_format=json_schema is set.
@@ -349,7 +352,7 @@ async def _run_coordinator(prompt: str) -> dict[str, Any]:
 
 # 6. Process each transcript file.
 async def process_transcript(file_path: Path) -> None:
-    transcript = file_path.read_text(encoding="utf-8").strip()
+    transcript = file_path.read_text(encoding="utf-8").strip() # mock_transcripts/*.txt
     if not transcript:
         print(f"{file_path.name}: skipped (empty file)")
         return

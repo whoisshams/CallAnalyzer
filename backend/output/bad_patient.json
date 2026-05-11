@@ -5,24 +5,24 @@
     "empathy": 8,
     "clarity": 9,
     "helpfulness": 8,
-    "de_escalation": 9,
-    "notes": "Agent maintained composure and professionalism while arranging appropriate nurse callback for lab results review."
+    "de_escalation": 8,
+    "notes": "Agent maintained professional composure throughout hostile interaction and successfully arranged nurse callback per hospital policy."
   },
   "patient_tone_reviewer": {
     "respectfulness": 2,
-    "clarity": 7,
-    "cooperation": 4,
+    "clarity": 8,
+    "cooperation": 5,
     "emotional_regulation": 3,
     "escalation_intensity": 7,
-    "notes": "Patient was hostile throughout but eventually provided information needed for nurse callback regarding lab results."
+    "notes": "Patient demanded immediate lab results access but refused portal guidance; eventually accepted nurse callback after escalating frustration and hostile language."
   },
   "call_outcome_reviewer": {
     "resolution_completeness": 6,
-    "next_step_clarity": 8,
+    "next_step_clarity": 7,
     "phi_compliance": 9,
-    "safety_risk": 2,
-    "escalation_necessity": 3,
-    "notes": "Patient received clear next steps for nurse callback but remained frustrated with inability to get immediate results."
+    "safety_risk": 1,
+    "escalation_necessity": 4,
+    "notes": "Patient's lab results request addressed but not fully resolved; nurse callback scheduled per policy but patient left dissatisfied."
   },
-  "coordinator_summary": "This call demonstrates excellent agent performance under difficult circumstances. Agent Aisha maintained professionalism and empathy while dealing with an agitated patient who demanded immediate lab results. The agent appropriately followed hospital protocol by arranging a nurse callback instead of reading results over the phone, ensuring proper clinical review. Despite the patient's hostility and verbal abuse, the agent successfully de-escalated tensions and secured agreement for the callback. PHI compliance was excellent with proper identity verification. The interaction shows effective boundary-setting while remaining supportive."
+  "coordinator_summary": "This call demonstrates effective professional handling of a highly frustrated patient. Agent Aisha maintained composure, empathy, and clarity despite sustained hostility and personal insults from Mr. Cruz. The agent properly enforced clinical policy (nurse review of lab results rather than phone reading) and successfully arranged appropriate follow-up care through a nurse callback, demonstrating strong de-escalation and conflict management. Patient's escalation intensity remained high throughout, with low respect and emotional regulation, though he ultimately accepted the proposed resolution. PHI compliance was excellent and no safety risks were identified. The partial resolution stems from policy constraints rather than agent failure; the nurse callback represents the appropriate clinical pathway."
 }

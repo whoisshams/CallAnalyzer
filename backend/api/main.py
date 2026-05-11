@@ -1,0 +1,46 @@
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+
+from agent.service import analyze_transcript
+
+
+app = FastAPI(title="Call Recording Analyzer API")
+
+# Local frontend dev servers can call this API without browser CORS blocks.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/health")
+def health() -> dict[str, str]:
+    return {"status": "ok"}
+
+# AnalyzeTranscriptRequest is the request body used by the UI to submit transcript text for analysis. So this not used by the API.
+class AnalyzeTranscriptRequest(BaseModel):
+    """Request body used by the UI to submit transcript text for analysis."""
+
+    transcript_id: str = Field(..., min_length=1, examples=["demo_call.txt"])
+    transcript: str = Field(
+        ...,
+        min_length=1,
+        examples=["Agent: Hello.\nPatient: I need help"],
+    )
+
+@app.post("/analyze")
+async def analyze(request: AnalyzeTranscriptRequest) -> dict:
+    """Analyze transcript text submitted by the UI and return the final QA report."""
+    try:
+        return await analyze_transcript(request.transcript_id, request.transcript)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc

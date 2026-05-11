@@ -1,0 +1,72 @@
+.app-shell {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding: 48px 24px;
+}
+
+.hero-card {
+  width: min(760px, 100%);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  padding: 48px;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  margin: 0 0 16px;
+  text-transform: uppercase;
+}
+
+.intro {
+  color: var(--text);
+  font-size: 20px;
+  max-width: 620px;
+}
+
+.status-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 36px;
+}
+
+.status-grid div {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel-muted);
+  padding: 18px;
+}
+
+.status-grid span,
+.status-grid strong {
+  display: block;
+}
+
+.status-grid span {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.status-grid strong {
+  color: var(--text-h);
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+@media (max-width: 720px) {
+  .hero-card {
+    padding: 32px 24px;
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+}

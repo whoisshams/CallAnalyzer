@@ -2,11 +2,11 @@
   "transcript_id": "smooth_call.txt",
   "agent_tone_reviewer": {
     "professionalism": 10,
-    "empathy": 8,
+    "empathy": 9,
     "clarity": 10,
     "helpfulness": 10,
     "de_escalation": 5,
-    "notes": "Agent successfully scheduled appointment and provided comprehensive guidance with excellent professional communication throughout."
+    "notes": "Agent successfully booked appointment, answered all patient questions clearly, and provided comprehensive pre-visit instructions."
   },
   "patient_tone_reviewer": {
     "respectfulness": 10,
@@ -14,7 +14,7 @@
     "cooperation": 10,
     "emotional_regulation": 10,
     "escalation_intensity": 1,
-    "notes": "Patient successfully scheduled appointment and received all needed information through polite, cooperative interaction."
+    "notes": "Patient successfully booked appointment Thursday at 2:15 PM with Dr. Patel after clarifying fasting and medication requirements."
   },
   "call_outcome_reviewer": {
     "resolution_completeness": 10,
@@ -22,7 +22,7 @@
     "phi_compliance": 8,
     "safety_risk": 1,
     "escalation_necessity": 1,
-    "notes": "Patient successfully booked appointment and received clear preparation instructions and arrival guidance."
+    "notes": "Appointment successfully booked with clear pre-visit instructions and confirmation provided via text and email."
   },
-  "coordinator_summary": "Exemplary call handling with perfect resolution. Agent Priya demonstrated exceptional professionalism and clarity while efficiently scheduling Ms. Carter's appointment and providing comprehensive preparation guidance. The patient was consistently respectful and cooperative throughout. The interaction required no de-escalation as it remained pleasant and productive from start to finish. Minor PHI compliance consideration noted but overall excellent service delivery with complete task resolution and clear next steps provided."
+  "coordinator_summary": "Excellent call execution. Support agent Priya demonstrated outstanding professionalism and helpfulness throughout the interaction. Patient Emily Carter was respectful, clear, and highly cooperative. The primary objective\u2014appointment booking\u2014was completed successfully with the patient scheduled for Thursday at 2:15 PM with Dr. Patel. All pre-visit requirements were clearly communicated (fasting, medication list, documentation, arrival time). Confirmation will be sent via text and email. The agent displayed strong bedside manner and proactively offered additional support for symptom changes. De-escalation score (5) reflects a smooth, non-conflict call rather than tension management. Minor PHI consideration noted in collection of DOB, but handled appropriately. No safety risks or escalation concerns identified. Call demonstrates exemplary customer service standards."
 }

@@ -1,6 +1,15 @@
 import json
 import anthropic
 
+from tools.structured_output import build_score_submission_tool, extract_forced_tool_json
+
+
+PATIENT_TONE_TOOL = build_score_submission_tool(
+    "patient_tone_reviewer",
+    "submit_patient_tone_scores",
+    "Submit structured 1-10 scores and notes for the patient only.",
+)
+
 
 def analyze_patient_tone(transcript: str) -> str:
     """
@@ -10,14 +19,13 @@ def analyze_patient_tone(transcript: str) -> str:
     client = anthropic.Anthropic()
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
-            maxTurns=3,
+            model="claude-haiku-4-5-20251001",
             max_tokens=700,
             system=(
                 "You are a hospital QA reviewer scoring ONLY the patient's behavior. "
                 "Ignore anything the support agent says — do not let agent behavior influence patient scores. "
                 "Score each dimension based solely on the patient's words, tone, and actions. "
-                "Return ONLY a valid JSON object — no markdown, no code fences, no extra keys. "
+                "Use the submit_patient_tone_scores tool to submit the final scores; do not answer in prose. "
                 "Required fields and scoring rubric: "
                 "respectfulness (int 1-10): politeness and courtesy toward the agent; "
                 "1=abusive or hostile, 10=consistently respectful. "
@@ -39,9 +47,11 @@ def analyze_patient_tone(transcript: str) -> str:
                     "content": f"Transcript:\n{transcript}",
                 }
             ],
+            # Forced tool_use gives the inner model call a schema-bound output contract.
+            tools=[PATIENT_TONE_TOOL],
+            tool_choice={"type": "tool", "name": "submit_patient_tone_scores"},
         )
-        text_blocks = [b.text for b in response.content if b.type == "text"]
-        return "".join(text_blocks).strip()
+        return extract_forced_tool_json(response, "submit_patient_tone_scores")
 
     except anthropic.AuthenticationError:
         return json.dumps({"isError": True, "errorCategory": "auth", "isRetryable": False,

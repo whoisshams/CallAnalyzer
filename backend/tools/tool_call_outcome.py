@@ -1,6 +1,15 @@
 import json
 import anthropic
 
+from tools.structured_output import build_score_submission_tool, extract_forced_tool_json
+
+
+CALL_OUTCOME_TOOL = build_score_submission_tool(
+    "call_outcome_reviewer",
+    "submit_call_outcome_scores",
+    "Submit structured 1-10 scores and notes for the overall call outcome.",
+)
+
 
 def analyze_call_outcome(transcript: str) -> str:
     """
@@ -11,13 +20,12 @@ def analyze_call_outcome(transcript: str) -> str:
     client = anthropic.Anthropic()
     try:
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
-            maxTurns=3,
+            model="claude-haiku-4-5-20251001",
             max_tokens=700,
             system=(
                 "You are a hospital QA reviewer assessing the overall outcome of the entire call. "
                 "Evaluate both the support agent and patient together to determine how the call concluded. "
-                "Return ONLY a valid JSON object — no markdown, no code fences, no extra keys. "
+                "Use the submit_call_outcome_scores tool to submit the final scores; do not answer in prose. "
                 "Required fields and scoring rubric: "
                 "resolution_completeness (int 1-10): how fully the patient's issue was resolved; "
                 "1=unresolved and patient left worse off, 10=issue fully resolved to patient's satisfaction. "
@@ -39,9 +47,11 @@ def analyze_call_outcome(transcript: str) -> str:
                     "content": f"Transcript:\n{transcript}",
                 }
             ],
+            # Forced tool_use gives the inner model call a schema-bound output contract.
+            tools=[CALL_OUTCOME_TOOL],
+            tool_choice={"type": "tool", "name": "submit_call_outcome_scores"},
         )
-        text_blocks = [b.text for b in response.content if b.type == "text"]
-        return "".join(text_blocks).strip()
+        return extract_forced_tool_json(response, "submit_call_outcome_scores")
 
     except anthropic.AuthenticationError:
         return json.dumps({"isError": True, "errorCategory": "auth", "isRetryable": False,
