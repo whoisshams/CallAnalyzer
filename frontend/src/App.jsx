@@ -1,33 +1,32 @@
+import { useState } from 'react'
 import './App.css'
+import InputWindow from './InputWindow.jsx'
+import OutputWindow from './OutputWindow.jsx'
+
+const STEPS = [
+  'Starting analysis...',
+  'Checking agent tone...',
+  'Checking patient tone...',
+  'Checking call outcome...',
+  'Building final summary...',
+]
 
 function App() {
-  return (
-    <main className="app-shell">
-      <section className="hero-card" aria-labelledby="page-title">
-        <p className="eyebrow">Call Recording Analyzer</p>
-        <h1 id="page-title">Frontend scaffold is ready.</h1>
-        <p className="intro">
-          This Vite React app is set up to talk to the FastAPI backend. The
-          transcript analysis UI can now build on the client in{' '}
-          <code>src/lib/api.js</code>.
-        </p>
+  const [messages, setMessages] = useState([])
 
-        <div className="status-grid" aria-label="Setup status">
-          <div>
-            <span>Frontend</span>
-            <strong>Vite + React + JavaScript</strong>
-          </div>
-          <div>
-            <span>Backend API</span>
-            <strong>http://localhost:8000</strong>
-          </div>
-          <div>
-            <span>Analyze endpoint</span>
-            <strong>POST /analyze</strong>
-          </div>
-        </div>
-      </section>
-    </main>
+  async function handleAnalyze() {
+    setMessages([])
+    for (const step of STEPS) {
+      await new Promise((r) => setTimeout(r, 700))
+      setMessages((prev) => [...prev, step])
+    }
+  }
+
+  return (
+    <>
+      <InputWindow onAnalyze={handleAnalyze} />
+      <OutputWindow messages={messages} />
+    </>
   )
 }
 
