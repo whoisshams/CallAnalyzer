@@ -34,8 +34,12 @@ if not os.getenv("ANTHROPIC_API_KEY"):
 
 from claude_agent_sdk import (
     AgentDefinition,
+    AssistantMessage,
     ClaudeAgentOptions,
     HookMatcher,
+    ToolResultBlock,
+    ToolUseBlock,
+    UserMessage,
     create_sdk_mcp_server,
     query,
     tool,
@@ -348,6 +352,75 @@ async def _run_coordinator(prompt: str) -> dict[str, Any]:
         raise RuntimeError("Coordinator did not return a structured JSON result.")
 
     return structured
+
+
+# Per-reviewer progress messages used by the streaming endpoint.
+_REVIEWER_PROGRESS = {
+    "mcp__qa_tools__analyze_agent_tone":
+        "Agent tone reviewer analyzing professionalism, empathy, clarity, helpfulness, and de-escalation.",
+    "mcp__qa_tools__analyze_patient_tone":
+        "Patient tone reviewer analyzing respectfulness, clarity, cooperation, emotional regulation, and escalation intensity.",
+    "mcp__qa_tools__analyze_call_outcome":
+        "Call outcome reviewer checking resolution, next-step clarity, PHI compliance, safety risk, and escalation necessity.",
+}
+
+
+async def _run_coordinator_streamed(prompt: str):
+    """
+    Same pipeline as _run_coordinator, but yields real-time progress events.
+
+    Yields ("progress", "<message>") whenever a real moment occurs in the
+    SDK message stream, and finally ("result", <dict>) with the structured
+    output. Detection is based on ToolUseBlock / ToolResultBlock content
+    blocks the coordinator and reviewers emit while running.
+    """
+    structured = None
+    dispatched = False                 # first Task tool_use seen
+    started: set[str] = set()          # reviewer tools we've already announced
+    completed: set[str] = set()        # reviewer tool_results we've already counted
+    use_id_to_name: dict[str, str] = {}
+    assembled = False
+
+    async for message in query(prompt=prompt, options=options):
+        # Both AssistantMessage and UserMessage carry content blocks we care about.
+        if isinstance(message, (AssistantMessage, UserMessage)):
+            content = message.content if isinstance(message.content, list) else []
+
+            for block in content:
+                # Tool calls: the coordinator dispatches Task → reviewer calls MCP tool.
+                if isinstance(block, ToolUseBlock):
+                    use_id_to_name[block.id] = block.name
+
+                    if block.name == "Task" and not dispatched:
+                        dispatched = True
+                        yield ("progress", "Coordinator dispatching three specialist reviewers.")
+
+                    if block.name in _REVIEWER_PROGRESS and block.name not in started:
+                        started.add(block.name)
+                        yield ("progress", _REVIEWER_PROGRESS[block.name])
+
+                # Tool results: one fires per reviewer once the hook accepts the JSON.
+                elif isinstance(block, ToolResultBlock):
+                    name = use_id_to_name.get(block.tool_use_id)
+                    if name in _REVIEWER_PROGRESS and name not in completed:
+                        if not completed:
+                            yield ("progress", "PostToolUse hook validating each reviewer JSON immediately.")
+                        completed.add(name)
+                        if len(completed) == 3:
+                            yield ("progress", "Reviewer outputs passed schema checks.")
+
+        # SDK delivers the final structured JSON via ResultMessage.structured_output.
+        candidate = getattr(message, "structured_output", None)
+        if isinstance(candidate, dict):
+            structured = candidate
+            if not assembled:
+                assembled = True
+                yield ("progress", "Coordinator assembling final structured report.")
+
+    if structured is None:
+        raise RuntimeError("Coordinator did not return a structured JSON result.")
+
+    yield ("result", structured)
 
 
 # 6. Process each transcript file.

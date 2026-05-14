@@ -1,47 +1,41 @@
 import { useState, useEffect } from 'react'
+import { streamAnalysis } from './lib/api.js'
 
-// The progress steps shown in the console during analysis
-const STEPS = [
-  'Starting analysis...',
-  'Checking agent tone...',
-  'Checking patient tone...',
-  'Checking call outcome...',
-  'Building final summary...',
-]
+// Progress messages now stream from the backend in real time.
+// No fake timers — each line appears when the matching backend event fires.
 
-// OutputWindow owns all analysis state and logic.
-// analyzeCount is a number that goes up by 1 each time the user clicks Analyze.
-// When it changes, useEffect runs the analysis.
 function OutputWindow({ transcript, analyzeCount }) {
   const [messages, setMessages] = useState([])
   const [result, setResult]     = useState(null)
 
-  // Run analysis every time analyzeCount increases
   useEffect(() => {
-    // Skip the very first render (analyzeCount starts at 0)
-    if (analyzeCount === 0) return
+    if (analyzeCount === 0) return // skip first render
 
-    async function runAnalysis() {
+    async function run() {
       setMessages([])
       setResult(null)
 
-      // Show each step one by one with a short delay
-      for (const step of STEPS) {
-        await new Promise((r) => setTimeout(r, 700))
-        setMessages((prev) => [...prev, step])
+      try {
+        await streamAnalysis(
+          { transcript_id: 'ui_submission', transcript },
+          (event, data) => {
+            // 'progress' = a status line; 'result' = final JSON; 'error' = failure
+            if (event === 'progress') {
+              setMessages((prev) => [...prev, data])
+            } else if (event === 'result') {
+              setResult(data)
+            } else if (event === 'error') {
+              setMessages((prev) => [...prev, `Error: ${data.detail}`])
+            }
+          },
+        )
+      } catch (err) {
+        setMessages((prev) => [...prev, `Error: ${err.message}`])
       }
-
-      // TODO: replace this placeholder with a real API call:
-      // const data = await analyzeTranscript({ transcript_id: 'ui_submission', transcript })
-      // setResult(data)
-      setResult({
-        coordinator_summary: 'Placeholder summary. Wire the API to see real results.',
-        transcript,
-      })
     }
 
-    runAnalysis()
-  }, [analyzeCount, transcript]) // re-runs when analyzeCount changes; transcript is read inside the useEffect hook
+    run()
+  }, [analyzeCount, transcript])
 
   const hasContent = messages.length > 0 || result !== null
 
@@ -49,12 +43,10 @@ function OutputWindow({ transcript, analyzeCount }) {
     <div className="panel">
       <p className="panel-title">Output</p>
 
-      {/* Placeholder shown before the first analysis */}
       {!hasContent && (
         <p className="output-empty">Results will appear here after you click Analyze.</p>
       )}
 
-      {/* Console log lines shown while analysis is running */}
       {messages.length > 0 && (
         <div className="console">
           {messages.map((msg, i) => (
@@ -66,7 +58,6 @@ function OutputWindow({ transcript, analyzeCount }) {
         </div>
       )}
 
-      {/* Summary and full JSON shown after analysis finishes */}
       {result && (
         <>
           <p className="result-summary">{result.coordinator_summary}</p>

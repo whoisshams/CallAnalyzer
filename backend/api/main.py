@@ -1,8 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from agent.service import analyze_transcript
+from agent.service_stream import analyze_transcript_stream
 
 
 app = FastAPI(title="Call Recording Analyzer API")
@@ -44,3 +46,12 @@ async def analyze(request: AnalyzeTranscriptRequest) -> dict:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except RuntimeError as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.post("/analyze/stream")
+async def analyze_stream(request: AnalyzeTranscriptRequest) -> StreamingResponse:
+    """Stream analysis progress to the UI as Server-Sent Events in real time."""
+    return StreamingResponse(
+        analyze_transcript_stream(request.transcript_id, request.transcript),
+        media_type="text/event-stream",
+    )

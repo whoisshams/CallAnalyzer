@@ -1,3 +1,5 @@
+"""This file is different from the ones that runs from the command line. It handles the API request and response."""
+
 from typing import Any
 # _run_coordinator is the function that runs the coordinator agent
 from agent.hub_spoke import _run_coordinator
