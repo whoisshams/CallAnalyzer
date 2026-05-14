@@ -3,30 +3,27 @@ import './App.css'
 import InputWindow from './InputWindow.jsx'
 import OutputWindow from './OutputWindow.jsx'
 
-const STEPS = [
-  'Starting analysis...',
-  'Checking agent tone...',
-  'Checking patient tone...',
-  'Checking call outcome...',
-  'Building final summary...',
-]
-
 function App() {
-  const [messages, setMessages] = useState([])
-
-  async function handleAnalyze() {
-    setMessages([])
-    for (const step of STEPS) {
-      await new Promise((r) => setTimeout(r, 700))
-      setMessages((prev) => [...prev, step])
-    }
-  }
+  // Transcript text lives here so both panels can access it
+  const [transcript, setTranscript] = useState('')
+  // Increments each time the user clicks Analyze; OutputWindow watches this
+  const [analyzeCount, setAnalyzeCount] = useState(0)
 
   return (
-    <>
-      <InputWindow onAnalyze={handleAnalyze} />
-      <OutputWindow messages={messages} />
-    </>
+    <div className="app">
+      <header className="app-header">
+        <h1>Call Recording Analyzer</h1>
+        <p>Paste or load a transcript, then click Analyze.</p>
+      </header>
+
+      <InputWindow
+        transcript={transcript}
+        onChange={setTranscript}
+        onAnalyze={() => setAnalyzeCount((n) => n + 1)}
+      />
+
+      <OutputWindow transcript={transcript} analyzeCount={analyzeCount} />
+    </div>
   )
 }
 

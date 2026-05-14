@@ -1,42 +1,60 @@
-/* ── InputWindow ─────────────────────────────────────────── */
-.input-window {
+/* ── Page layout ───────────────────────────────────────────
+   Two columns side by side: InputWindow on the left,
+   OutputWindow on the right. */
+
+.app {
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* two equal columns */
+  grid-template-rows: auto 1fr;     /* header row, then content row */
+  gap: 16px;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* Header spans both columns */
+.app-header {
+  grid-column: 1 / -1;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 16px;
+}
+
+.app-header h1 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  color: #0f172a;
+}
+
+.app-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* ── Shared panel style ────────────────────────────────────
+   Both windows use the same white card base. */
+
+.panel {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
-.input-window__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.input-window__label {
-  font-size: 14px;
+.panel-title {
+  font-size: 13px;
   font-weight: 600;
   color: #475569;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  margin: 0;
 }
 
-.input-window__clear {
-  font-size: 13px;
-  font-family: inherit;
-  color: #64748b;
-  background: none;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  padding: 3px 10px;
-  cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
-}
+/* ── InputWindow ───────────────────────────────────────────── */
 
-.input-window__clear:hover {
-  color: #ef4444;
-  border-color: #ef4444;
-}
-
-.input-window__samples {
+.sample-buttons {
   display: flex;
   gap: 8px;
 }
@@ -44,50 +62,118 @@
 .btn {
   font-size: 13px;
   font-family: inherit;
-  color: #475569;
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
   padding: 4px 12px;
   cursor: pointer;
+  color: #475569;
 }
 
 .btn:hover {
   background: #e2e8f0;
 }
 
-.input-window__textarea {
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+textarea {
   width: 100%;
-  min-height: 380px;
+  flex: 1;
+  min-height: 300px;
   resize: vertical;
-  padding: 16px;
-  font-size: 14px;
-  font-family: ui-monospace, Menlo, Consolas, monospace;
-  line-height: 1.65;
-  color: #1e293b;
-  background: #fff;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  box-sizing: border-box;
+  padding: 12px;
+  font-size: 13px;
+  font-family: ui-monospace, Consolas, monospace;
+  line-height: 1.6;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  color: #1e293b;
 }
 
-.input-window__textarea:focus {
+textarea:focus {
   border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
 
-.input-window__textarea::placeholder {
-  color: #94a3b8;
-}
-
-.input-window__footer {
+.input-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.input-window__char-count {
+.char-count {
   font-size: 12px;
   color: #94a3b8;
+}
+
+.btn-analyze {
+  background: #6366f1;
+  color: #fff;
+  border-color: #6366f1;
+  padding: 6px 18px;
+  font-size: 14px;
+}
+
+.btn-analyze:hover {
+  background: #4f46e5;
+}
+
+.btn-analyze:disabled {
+  background: #a5b4fc;
+  border-color: #a5b4fc;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* ── OutputWindow ──────────────────────────────────────────── */
+
+.output-empty {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* Console log area */
+.console {
+  background: #0f172a;
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.console-line {
+  font-size: 13px;
+  font-family: ui-monospace, Consolas, monospace;
+  color: #94a3b8;
+  display: flex;
+  gap: 10px;
+}
+
+.console-prefix {
+  color: #6366f1;
+}
+
+/* Summary text and raw JSON */
+.result-summary {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #1e293b;
+  margin: 0;
+}
+
+.result-json {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 12px;
+  font-family: ui-monospace, Consolas, monospace;
+  color: #475569;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
 }
