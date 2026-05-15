@@ -39,7 +39,12 @@ function InputWindow({ transcript, onChange, onAnalyze }) {
 
   return (
     <div className="panel">
-      <p className="panel-title">Transcript</p>
+      <div className="panel-header">
+        <p className="panel-title">Transcript</p>
+        <span className="panel-meta">/api/analyze · POST</span>
+      </div>
+
+      <p className="section-label">Load a sample</p>
 
       {/* Sample buttons — click to fill the textarea */}
       <div className="sample-buttons">
@@ -48,16 +53,18 @@ function InputWindow({ transcript, onChange, onAnalyze }) {
             {s.label}
           </Button>
         ))}
+      </div>
 
-        {/* Upload MP3 button: opens the hidden file picker */}
+      {/* Upload row — own button + hint text */}
+      <div className="upload-row">
         <Button
+          className="btn-upload"
           onClick={() => fileInputRef.current?.click()}
           disabled={transcribing}
         >
           {transcribing ? 'Transcribing...' : 'Upload MP3'}
         </Button>
-
-        {/* Hidden file input — accepts only audio files */}
+        <span className="upload-hint">or drop a recording — .mp3, .wav, .m4a</span>
         <input
           ref={fileInputRef}
           type="file"
@@ -66,6 +73,9 @@ function InputWindow({ transcript, onChange, onAnalyze }) {
           style={{ display: 'none' }}
         />
       </div>
+
+      {/* Indeterminate loading bar shown while the upload is being transcribed */}
+      {transcribing && <div className="progress-bar" aria-label="Transcribing audio" />}
 
       {/* The main text input area */}
       <textarea

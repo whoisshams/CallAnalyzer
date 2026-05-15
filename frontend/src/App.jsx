@@ -12,8 +12,16 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Call Recording Analyzer</h1>
-        <p>Paste or load a transcript, then click Analyze.</p>
+        <div className="brand">
+          <span className="brand-mark" aria-hidden="true" />
+          <span className="brand-name">CallAnalyser</span>
+          <span className="brand-version">v0.4 · demo</span>
+        </div>
+        <div className="server-status">
+          <span className="status-dot" aria-hidden="true" />
+          <span>api.callanalyser.local</span>
+          <span className="server-meta">FastAPI · 4 agents</span>
+        </div>
       </header>
 
       <InputWindow

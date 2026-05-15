@@ -60,12 +60,14 @@ export function analyzeTranscript(payload) {
  *
  * @param {{ transcript_id: string, transcript: string }} payload
  * @param {(event: string, data: any) => void} onEvent
+ * @param {AbortSignal} [signal]
  */
-export async function streamAnalysis(payload, onEvent) {
+export async function streamAnalysis(payload, onEvent, signal) {
   const response = await fetch(`${API_BASE_URL}/analyze/stream`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
+    signal,
   })
 
   if (!response.ok) {
