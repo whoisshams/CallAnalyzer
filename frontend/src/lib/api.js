@@ -1,4 +1,8 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000'
+// Default to a relative path so the Vite dev proxy can forward to the
+// Whisper server at http://localhost:9000 (configured in vite.config.js).
+// This avoids CORS issues with the container which doesn't allow cross-origin.
+const TRANSCRIBE_URL = import.meta.env.VITE_TRANSCRIBE_URL ?? '/whisper'
 
 /**
  * @template T
@@ -92,4 +96,48 @@ export async function streamAnalysis(payload, onEvent) {
       if (data) onEvent(event, JSON.parse(data))
     }
   }
+}
+
+/**
+ * Send an audio file to the Whisper-compatible transcription endpoint
+ * and return the transcribed text.
+ *
+ * @param {File} file
+ * @returns {Promise<string>}
+ */
+export async function transcribeAudio(file) {
+  // Build a multipart/form-data body — same shape as the curl example.
+  const form = new FormData()
+  form.append('file', file)
+  form.append('model', 'whisper-1')
+  form.append('language', 'auto')
+  form.append('response_format', 'json')
+  form.append('temperature', '0')
+
+  const url = `${TRANSCRIBE_URL}/v1/audio/transcriptions`
+
+  let response
+  try {
+    response = await fetch(url, {
+      method: 'POST',
+      body: form, // Do NOT set Content-Type — the browser adds the boundary.
+    })
+  } catch (err) {
+    // fetch() throws (with a vague message like "Load failed") when the
+    // request never reached the server — usually a wrong URL, the server is
+    // not running, or CORS blocked the request before a response could be read.
+    throw new Error(
+      `Could not reach transcription server at ${url}. ` +
+      `Check that it is running and CORS allows http://localhost:5173. ` +
+      `(${err.message})`,
+      { cause: err },
+    )
+  }
+
+  if (!response.ok) {
+    throw new Error(`Transcription failed with status ${response.status}`)
+  }
+
+  const data = await response.json()
+  return data.text ?? ''
 }
