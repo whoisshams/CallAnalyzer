@@ -101,3 +101,11 @@ use postgres
 deploy with docker
 use n8n later if possible
 other token minimisation concepts
+
+## Add these for the final MVP
+fix the industry situation
+add tests
+add a nice live demo video
+add a nice readMe
+change the json output so that it is like statistics
+use sql to maintain the history for the results 

@@ -83,9 +83,9 @@ N/A	APIConnectionError'''
         "Input: raw transcript text with speaker turns (e.g. 'Agent: ... Patient: ...'). "
         "Do NOT pass an empty string. Do NOT use this tool to assess the patient. "
         "Output: Returns a JSON object with integer scores 1–10 for: professionalism, empathy, "
-        "clarity, helpfulness, de_escalation, and a non-empty 'notes' string. "
+        "clarity, helpfulness, tension_handling, and a non-empty 'notes' string. "
         "Example output: {\"professionalism\": 8, \"empathy\": 7, \"clarity\": 9, "
-        "\"helpfulness\": 8, \"de_escalation\": 6, \"notes\": \"Agent stayed calm.\"}. "
+        "\"helpfulness\": 8, \"tension_handling\": 6, \"notes\": \"Agent stayed calm.\"}. "
         "Returns a JSON parse error description if the model output is malformed."
     ),
     {"transcript": str},
@@ -110,9 +110,9 @@ async def analyze_agent_tone_tool(args):
         "Input: raw transcript text with speaker turns (e.g. 'Agent: ... Patient: ...'). "
         "Do NOT pass an empty string. Do NOT use this tool to assess the support agent. "
         "Returns a JSON object with integer scores 1–10 for: respectfulness, clarity, "
-        "cooperation, emotional_regulation, escalation_intensity, and a non-empty 'notes' string. "
+        "cooperation, emotional_regulation, and a non-empty 'notes' string. "
         "Example output: {\"respectfulness\": 6, \"clarity\": 7, \"cooperation\": 5, "
-        "\"emotional_regulation\": 4, \"escalation_intensity\": 8, \"notes\": \"Patient was agitated.\"}. "
+        "\"emotional_regulation\": 4, \"notes\": \"Patient was agitated.\"}. "
         "Returns a JSON parse error description if the model output is malformed."
     ),
     {"transcript": str},
@@ -134,11 +134,11 @@ async def analyze_patient_tone_tool(args):
         "Assess the overall outcome of a hospital call, evaluating both parties together. "
         "Input: raw transcript text with speaker turns (e.g. 'Agent: ... Patient: ...'). "
         "Do NOT pass an empty string. Use this tool only after both agent and patient tones have been scored. "
-        "Returns a JSON object with integer scores 1–10 for: resolution_completeness, next_step_clarity, "
-        "phi_compliance, safety_risk, escalation_necessity, and a non-empty 'notes' string. "
-        "Example output: {\"resolution_completeness\": 7, \"next_step_clarity\": 8, "
-        "\"phi_compliance\": 10, \"safety_risk\": 2, \"escalation_necessity\": 3, "
-        "\"notes\": \"Issue resolved; no PHI breach.\"}. "
+        "Returns a JSON object with integer scores 1–10 for: resolution_completeness, followup_clarity, "
+        "privacy_handling, safety_risk, escalation_necessity, and a non-empty 'notes' string. "
+        "Example output: {\"resolution_completeness\": 7, \"followup_clarity\": 8, "
+        "\"privacy_handling\": 10, \"safety_risk\": 2, \"escalation_necessity\": 3, "
+        "\"notes\": \"Issue resolved; patient privacy was fully protected.\"}. "
         "Returns a JSON parse error description if the model output is malformed."
     ),
     {"transcript": str},

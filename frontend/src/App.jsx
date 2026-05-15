@@ -14,8 +14,15 @@ function App() {
       <header className="app-header">
         <div className="brand">
           <span className="brand-mark" aria-hidden="true" />
-          <span className="brand-name">CallAnalyser</span>
-          <span className="brand-version">v0.4 · demo</span>
+          <div className="brand-copy">
+            <div>
+              <span className="brand-name">CallAnalyser</span>
+              <span className="brand-version">v0.4 · demo</span>
+            </div>
+            <p className="brand-description">
+              A configurable call center QA analyzer, currently demoed with healthcare calls.
+            </p>
+          </div>
         </div>
         <div className="server-status">
           <span className="status-dot" aria-hidden="true" />
