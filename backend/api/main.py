@@ -9,7 +9,7 @@ from agent.service_stream import analyze_transcript_stream
 
 app = FastAPI(title="Call Recording Analyzer API")
 
-# Local frontend dev servers can call this API without browser CORS blocks.
+# Local dev + stable Vercel production domain; regex covers preview deploy URLs.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -17,6 +17,7 @@ app.add_middleware(
         "http://localhost:5173",
         "https://call-analyzer-coral.vercel.app",
     ],
+    allow_origin_regex=r"^https://.*\.vercel\.app$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
