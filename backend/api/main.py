@@ -15,7 +15,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:5173",
-        "https://call-analyzer-apcwdh5k9-whoisshams-projects.vercel.app",
+        "https://call-analyzer-bh6hfxpym-whoisshams-projects.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
