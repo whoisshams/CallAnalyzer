@@ -3,3 +3,4 @@ python-dotenv>=1.0.0
 anthropic>=0.52.0
 fastapi
 uvicorn
+claude_agent_sdk
