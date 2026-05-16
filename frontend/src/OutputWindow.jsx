@@ -146,7 +146,6 @@ function OutputWindow({ transcript, analyzeCount }) {
           <section className="summary-card">
             <div className="summary-heading">
               <span className="summary-label">Coordinator Summary</span>
-              <strong>{result.transcript_id}</strong>
             </div>
             <p className="result-summary">{result.coordinator_summary}</p>
 
