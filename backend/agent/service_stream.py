@@ -40,8 +40,8 @@ async def analyze_transcript_stream(
                 "error",
                 {
                     "detail": (
-                        "Demo mode: load a sample (Smooth Call, Bad Agent, or Bad Patient) "
-                        "and click Analyze."
+                        "Demo mode is active. For a live analysis with your own transcript, "
+                        "contact the owner at whoisshams@gmail.com"
                     ),
                 },
             )

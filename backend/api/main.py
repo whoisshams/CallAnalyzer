@@ -72,7 +72,7 @@ def _anthropic_status() -> tuple[str, str]:
 @app.get("/status")
 def api_status() -> dict[str, str]:
     if os.getenv("DEMO_MODE", "").lower() in ("1", "true", "yes"):
-        return {"api": "ok", "anthropic": "demo", "message": "Demo mode — use sample transcripts."}
+        return {"api": "ok", "anthropic": "demo", "message": "Demo mode — use samples below. Live access: whoisshams@gmail.com"}
     state, message = _anthropic_status()
     return {"api": "ok", "anthropic": state, "message": message}
 

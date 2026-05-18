@@ -5,7 +5,7 @@
     "empathy": 9,
     "clarity": 10,
     "helpfulness": 10,
-    "de_escalation": 5,
+    "tension_handling": 5,
     "notes": "Agent successfully booked appointment, answered all patient questions clearly, and provided comprehensive pre-visit instructions."
   },
   "patient_tone_reviewer": {
@@ -13,16 +13,15 @@
     "clarity": 10,
     "cooperation": 10,
     "emotional_regulation": 10,
-    "escalation_intensity": 1,
     "notes": "Patient successfully booked appointment Thursday at 2:15 PM with Dr. Patel after clarifying fasting and medication requirements."
   },
   "call_outcome_reviewer": {
     "resolution_completeness": 10,
-    "next_step_clarity": 10,
-    "phi_compliance": 8,
+    "followup_clarity": 10,
+    "privacy_handling": 9,
     "safety_risk": 1,
     "escalation_necessity": 1,
     "notes": "Appointment successfully booked with clear pre-visit instructions and confirmation provided via text and email."
   },
-  "coordinator_summary": "Excellent call execution. Support agent Priya demonstrated outstanding professionalism and helpfulness throughout the interaction. Patient Emily Carter was respectful, clear, and highly cooperative. The primary objective\u2014appointment booking\u2014was completed successfully with the patient scheduled for Thursday at 2:15 PM with Dr. Patel. All pre-visit requirements were clearly communicated (fasting, medication list, documentation, arrival time). Confirmation will be sent via text and email. The agent displayed strong bedside manner and proactively offered additional support for symptom changes. De-escalation score (5) reflects a smooth, non-conflict call rather than tension management. Minor PHI consideration noted in collection of DOB, but handled appropriately. No safety risks or escalation concerns identified. Call demonstrates exemplary customer service standards."
+  "coordinator_summary": "Excellent call execution. Support agent Priya demonstrated outstanding professionalism and helpfulness throughout the interaction. Patient Emily Carter was respectful, clear, and highly cooperative. The primary objective — appointment booking — was completed successfully with the patient scheduled for Thursday at 2:15 PM with Dr. Patel. All pre-visit requirements were clearly communicated (fasting, medication list, documentation, arrival time). Confirmation will be sent via text and email. No safety risks or escalation concerns identified. Call demonstrates exemplary customer service standards."
 }

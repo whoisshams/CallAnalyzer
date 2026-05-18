@@ -23,7 +23,8 @@ async def analyze_transcript(transcript_id: str, transcript: str) -> dict[str, A
         data = load_demo_report(clean_transcript_id)
         if data is None:
             raise ValueError(
-                "Demo mode: load a sample (Smooth Call, Bad Agent, or Bad Patient) and analyze."
+                "Demo mode is active. For a live analysis with your own transcript, "
+                "contact the owner at whoisshams@gmail.com"
             )
         error = validate_report(data)
         if error:
