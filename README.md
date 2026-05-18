@@ -1,3 +1,4 @@
+
 # CallAnalyser
 
 **Author:** Shams Anjum, 2026
@@ -8,6 +9,9 @@ Currently demoed with hospital support calls.
 
 **Live demo:** [https://call-analyzer-coral.vercel.app](https://call-analyzer-coral.vercel.app)  
 **API health:** [https://callanalyzer.onrender.com/health](https://callanalyzer.onrender.com/health)
+
+## Demo Video
+[<img width="600" height="360" alt="FinalDemo" src="https://github.com/user-attachments/assets/ddaf75f3-ca51-4c84-95a8-1b77645e9e0f" />](https://youtu.be/2b7BmxjxxoU)
 
 ---
 
