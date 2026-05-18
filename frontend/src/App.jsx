@@ -10,6 +10,7 @@ const API_HOST = new URL(import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:
 
 function App() {
   const [transcript, setTranscript] = useState('')
+  const [transcriptId, setTranscriptId] = useState('')
   const [analyzeCount, setAnalyzeCount] = useState(0)
   const [apiState, setApiState] = useState('checking')
   const [apiMessage, setApiMessage] = useState('Checking API…')
@@ -55,11 +56,17 @@ function App() {
 
       <InputWindow
         transcript={transcript}
+        demoMode={apiState === 'demo'}
         onChange={setTranscript}
+        onSampleSelect={setTranscriptId}
         onAnalyze={() => setAnalyzeCount((n) => n + 1)}
       />
 
-      <OutputWindow transcript={transcript} analyzeCount={analyzeCount} />
+      <OutputWindow
+        transcript={transcript}
+        transcriptId={transcriptId}
+        analyzeCount={analyzeCount}
+      />
     </div>
   )
 }

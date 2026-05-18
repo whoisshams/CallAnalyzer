@@ -10,14 +10,14 @@ import badAgent   from '../../backend/mock_transcripts/bad_agent.txt?raw'
 import badPatient from '../../backend/mock_transcripts/bad_patient.txt?raw'
 
 const SAMPLES = [
-  { label: 'Smooth Call', text: smoothCall },
-  { label: 'Bad Agent',   text: badAgent },
-  { label: 'Bad Patient', text: badPatient },
+  { label: 'Smooth Call', id: 'smooth_call.txt', text: smoothCall },
+  { label: 'Bad Agent', id: 'bad_agent.txt', text: badAgent },
+  { label: 'Bad Patient', id: 'bad_patient.txt', text: badPatient },
 ]
 
 // transcript and onChange come from App (controlled input)
 // onAnalyze is called when the user clicks the Analyze button
-function InputWindow({ transcript, onChange, onAnalyze }) {
+function InputWindow({ transcript, onChange, onSampleSelect, onAnalyze, demoMode }) {
   const fileInputRef = useRef(null)
   const [transcribing, setTranscribing] = useState(false)
 
@@ -46,12 +46,22 @@ function InputWindow({ transcript, onChange, onAnalyze }) {
         <span className="panel-meta">/api/analyze · POST</span>
       </div>
 
-      <p className="section-label">Load a sample</p>
+      <p className="section-label">Load a demo sample</p>
+      {demoMode && (
+        <p className="demo-hint">
+          Demo mode — samples use saved reports. No API credits required.
+        </p>
+      )}
 
-      {/* Sample buttons — click to fill the textarea */}
       <div className="sample-buttons">
         {SAMPLES.map((s) => (
-          <Button key={s.label} onClick={() => onChange(s.text)}>
+          <Button
+            key={s.label}
+            onClick={() => {
+              onChange(s.text)
+              onSampleSelect(s.id)
+            }}
+          >
             {s.label}
           </Button>
         ))}
@@ -82,7 +92,10 @@ function InputWindow({ transcript, onChange, onAnalyze }) {
       {/* The main text input area */}
       <textarea
         value={transcript}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => {
+          onChange(e.target.value)
+          onSampleSelect('')
+        }}
         placeholder="Paste or type a call transcript here..."
         spellCheck={false}
       />

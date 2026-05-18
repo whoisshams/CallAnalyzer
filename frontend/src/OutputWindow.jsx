@@ -48,7 +48,7 @@ function buildSupportReview(result) {
   }
 }
 
-function OutputWindow({ transcript, analyzeCount }) {
+function OutputWindow({ transcript, transcriptId, analyzeCount }) {
   const [messages, setMessages] = useState([])
   const [result, setResult]     = useState(null)
   const [isRunning, setIsRunning] = useState(false)
@@ -69,7 +69,7 @@ function OutputWindow({ transcript, analyzeCount }) {
 
       try {
         await streamAnalysis(
-          { transcript_id: 'ui_submission', transcript },
+          { transcript_id: transcriptId || 'ui_submission', transcript },
           (event, data) => {
             if (event === 'progress') {
               setMessages((prev) => [...prev, data])
@@ -92,7 +92,7 @@ function OutputWindow({ transcript, analyzeCount }) {
 
     run()
     return () => controller.abort()
-  }, [analyzeCount, transcript])
+  }, [analyzeCount, transcript, transcriptId])
 
   function stopAnalysis() {
     if (!isRunning) return

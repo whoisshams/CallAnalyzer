@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 from typing import AsyncIterator
 
+from agent.demo import is_demo_mode, load_demo_report
 from agent.hub_spoke import _run_coordinator_streamed
 from agent.schema import validate_report
 
@@ -29,6 +30,28 @@ async def analyze_transcript_stream(
 
     if not transcript_id or not transcript:
         yield _sse("error", {"detail": "transcript_id and transcript must not be empty"})
+        return
+
+    if is_demo_mode():
+        yield _sse("progress", "Demo mode — using saved sample report (no live AI).")
+        data = load_demo_report(transcript_id)
+        if data is None:
+            yield _sse(
+                "error",
+                {
+                    "detail": (
+                        "Demo mode: load a sample (Smooth Call, Bad Agent, or Bad Patient) "
+                        "and click Analyze."
+                    ),
+                },
+            )
+            return
+        error = validate_report(data)
+        if error:
+            yield _sse("error", {"detail": f"invalid demo report: {error}"})
+            return
+        yield _sse("progress", "Sample report loaded.")
+        yield _sse("result", data)
         return
 
     # Fixed checkpoints that always run before the agent starts.

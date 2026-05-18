@@ -3,9 +3,9 @@
 """This file is different from the ones that runs from the command line. It handles the API request and response."""
 
 from typing import Any
-# _run_coordinator is the function that runs the coordinator agent
+
+from agent.demo import is_demo_mode, load_demo_report
 from agent.hub_spoke import _run_coordinator
-# validate_report is the function that validates the report
 from agent.schema import validate_report
 
 
@@ -18,6 +18,17 @@ async def analyze_transcript(transcript_id: str, transcript: str) -> dict[str, A
         raise ValueError("transcript_id must not be empty")
     if not clean_transcript:
         raise ValueError("transcript must not be empty")
+
+    if is_demo_mode():
+        data = load_demo_report(clean_transcript_id)
+        if data is None:
+            raise ValueError(
+                "Demo mode: load a sample (Smooth Call, Bad Agent, or Bad Patient) and analyze."
+            )
+        error = validate_report(data)
+        if error:
+            raise RuntimeError(f"{clean_transcript_id}: invalid demo report - {error}")
+        return data
 
     prompt = (
         f"TRANSCRIPT_ID: {clean_transcript_id}\n"
