@@ -1,13 +1,35 @@
-import { useState } from 'react'
+// Author: Shams Anjum, 2026
+
+import { useEffect, useState } from 'react'
 import './App.css'
 import InputWindow from './InputWindow.jsx'
 import OutputWindow from './OutputWindow.jsx'
+import { checkStatus } from './lib/api.js'
+
+const API_HOST = new URL(import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000').host
 
 function App() {
-  // Transcript text lives here so both panels can access it
   const [transcript, setTranscript] = useState('')
-  // Increments each time the user clicks Analyze; OutputWindow watches this
   const [analyzeCount, setAnalyzeCount] = useState(0)
+  const [apiState, setApiState] = useState('checking')
+  const [apiMessage, setApiMessage] = useState('Checking API…')
+
+  useEffect(() => {
+    checkStatus()
+      .then((s) => {
+        const state =
+          s.anthropic === 'available' ? 'ok'
+          : s.anthropic === 'demo' ? 'demo'
+          : s.anthropic === 'limited' ? 'warn'
+          : 'error'
+        setApiState(state)
+        setApiMessage(s.message)
+      })
+      .catch(() => {
+        setApiState('error')
+        setApiMessage('Cannot reach API.')
+      })
+  }, [])
 
   return (
     <div className="app">
@@ -25,9 +47,9 @@ function App() {
           </div>
         </div>
         <div className="server-status">
-          <span className="status-dot" aria-hidden="true" />
-          <span>api.callanalyser.local</span>
-          <span className="server-meta">FastAPI · 4 agents</span>
+          <span className={`status-dot status-dot--${apiState}`} aria-hidden="true" />
+          <span>{API_HOST}</span>
+          <span className="server-meta">{apiMessage}</span>
         </div>
       </header>
 

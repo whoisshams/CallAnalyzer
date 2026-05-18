@@ -1,3 +1,5 @@
+# Author: Shams Anjum, 2026
+
 """This file is different from the ones that runs from the command line. It handles the API request and response."""
 
 from typing import Any

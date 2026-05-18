@@ -1,3 +1,5 @@
+# Author: Shams Anjum, 2026
+
 import json
 from typing import Any
 

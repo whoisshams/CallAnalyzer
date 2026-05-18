@@ -1,3 +1,5 @@
+// Author: Shams Anjum, 2026
+
 import { useRef, useState } from 'react'
 import Button from './Button.jsx'
 import { transcribeAudio } from './lib/api.js'

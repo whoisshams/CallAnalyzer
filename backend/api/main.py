@@ -1,3 +1,9 @@
+# Author: Shams Anjum, 2026
+
+import os
+import time
+
+import anthropic
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -27,6 +33,48 @@ app.add_middleware(
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+_anthropic_cache: tuple[float, str, str] | None = None
+
+
+def _anthropic_status() -> tuple[str, str]:
+    """Cached probe: available, limited, or unavailable (+ user-facing message)."""
+    global _anthropic_cache
+    now = time.time()
+    if _anthropic_cache and _anthropic_cache[0] > now:
+        return _anthropic_cache[1], _anthropic_cache[2]
+
+    if not os.getenv("ANTHROPIC_API_KEY"):
+        result = ("unavailable", "API key not configured.")
+    else:
+        try:
+            anthropic.Anthropic().messages.create(
+                model="claude-haiku-4-5-20251001",
+                max_tokens=1,
+                messages=[{"role": "user", "content": "ping"}],
+            )
+            result = ("available", "AI analysis ready.")
+        except anthropic.AuthenticationError:
+            result = (
+                "unavailable",
+                "API credits reached. Contact owner to top up, or use demo samples.",
+            )
+        except anthropic.RateLimitError:
+            result = ("limited", "Rate limited — try again shortly.")
+        except Exception:
+            result = ("unavailable", "AI temporarily unavailable.")
+
+    _anthropic_cache = (now + 90, *result)
+    return result
+
+
+@app.get("/status")
+def api_status() -> dict[str, str]:
+    if os.getenv("DEMO_MODE", "").lower() in ("1", "true", "yes"):
+        return {"api": "ok", "anthropic": "demo", "message": "Demo mode — use sample transcripts."}
+    state, message = _anthropic_status()
+    return {"api": "ok", "anthropic": state, "message": message}
 
 # AnalyzeTranscriptRequest is the request body used by the UI to submit transcript text for analysis. So this not used by the API.
 class AnalyzeTranscriptRequest(BaseModel):

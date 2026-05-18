@@ -1,3 +1,5 @@
+# Author: Shams Anjum, 2026
+
 """
 Hospital call QA using the Claude Agent SDK (hub-and-spoke).
 

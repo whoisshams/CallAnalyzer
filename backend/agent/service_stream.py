@@ -1,3 +1,5 @@
+# Author: Shams Anjum, 2026
+
 """Streaming analysis using Server-Sent Events.
 
 Yields one SSE per real backend checkpoint so the UI can show progress live.

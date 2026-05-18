@@ -1,3 +1,5 @@
+# Author: Shams Anjum, 2026
+
 """
 This file describes the final QA report format.
 

@@ -1,3 +1,5 @@
+// Author: Shams Anjum, 2026
+
 import { useState, useEffect, useRef } from 'react'
 import { streamAnalysis } from './lib/api.js'
 import Button from './Button.jsx'

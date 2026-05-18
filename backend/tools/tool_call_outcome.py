@@ -1,3 +1,5 @@
+# Author: Shams Anjum, 2026
+
 import json
 import anthropic
 

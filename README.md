@@ -1,21 +1,36 @@
 # CallAnalyser
 
+**Author:** Shams Anjum, 2026
+
 A configurable hub-and-spoke multi-agent QA system for analyzing call center recordings. A coordinator dispatches three specialized AI reviewers in parallel — agent tone, patient tone, and call outcome — and streams live progress to the browser as each result arrives.
 
 Currently demoed with hospital support calls.
 
----
-
-
-
-> 📹 **Demo coming soon** — [watch the full demo](#)  
-
+**Live demo:** [https://call-analyzer-coral.vercel.app](https://call-analyzer-coral.vercel.app)  
+**API health:** [https://callanalyzer.onrender.com/health](https://callanalyzer.onrender.com/health)
 
 ---
 
 ## Architecture
 
 ![CallAnalyser Architecture](CallAnalyzerArchitecture.png)
+
+### Why hub-and-spoke?
+
+This app uses a **coordinator** (the hub) that sends work to **three specialist agents** (the spokes): agent tone, patient tone, and call outcome. Each agent focuses on one job and returns structured scores.
+
+**When this design works well**
+
+- Long or complex calls with many topics to judge
+- You want separate scores per area (not one vague summary)
+- You can run reviewers in parallel and catch mistakes per role
+
+**The tradeoff**
+
+- **More API calls = more tokens** than a single agent reading the transcript once
+- For **short, simple calls**, one agent with one JSON output is often **cheaper and faster**, with a small drop in depth per category
+
+**Rule of thumb:** hub-and-spoke is a good fit when the conversation is big enough that splitting the work helps quality. For small transcripts, a single direct agent is usually the better choice on cost.
 
 ---
 

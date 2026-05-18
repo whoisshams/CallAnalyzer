@@ -1,3 +1,5 @@
+// Author: Shams Anjum, 2026
+
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 

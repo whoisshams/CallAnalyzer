@@ -1,3 +1,5 @@
+// Author: Shams Anjum, 2026
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000'
 // Default to a relative path so the Vite dev proxy can forward to the
 // Whisper server at http://localhost:9000 (configured in vite.config.js).
@@ -40,6 +42,11 @@ async function requestJson(path, options) {
 /** @returns {Promise<{ status: string }>} */
 export function checkHealth() {
   return requestJson('/health')
+}
+
+/** @returns {Promise<{ api: string, anthropic: string, message: string }>} */
+export function checkStatus() {
+  return requestJson('/status')
 }
 
 /**

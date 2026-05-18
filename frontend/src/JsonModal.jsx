@@ -1,3 +1,5 @@
+// Author: Shams Anjum, 2026
+
 import { useState, useEffect, useCallback } from 'react'
 
 function JsonModal({ result, onClose }) {

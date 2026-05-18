@@ -1,3 +1,5 @@
+# Author: Shams Anjum, 2026
+
 """
 Quick checker for files in backend/output/.
 

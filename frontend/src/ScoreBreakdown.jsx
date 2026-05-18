@@ -1,3 +1,5 @@
+// Author: Shams Anjum, 2026
+
 function ScoreBar({ label, score, invert = false }) {
   const fill = invert ? ((11 - score) / 10) * 100 : (score / 10) * 100
   const isLow = fill < 50
