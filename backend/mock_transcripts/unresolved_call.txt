@@ -1,0 +1,11 @@
+Support Agent: Green Valley Hospital appointments, this is Sam. What do you need?
+Patient: I need to know whether my referral was received. My specialist appointment depends on it.
+Support Agent: The referral system is slow today.
+Patient: Can you check my file or tell me when I should call back?
+Support Agent: Not really. If it is there, someone will eventually contact you.
+Patient: I have already waited two weeks. Is there a department I can speak with?
+Support Agent: I do not have that information in front of me.
+Patient: Could you take my number and ask someone to follow up?
+Support Agent: We are too backed up for that. Try again another day.
+Patient: So there is no confirmation and no next step?
+Support Agent: Correct. Just wait.

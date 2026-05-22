@@ -1,0 +1,4 @@
+Support Agent: Thank you for calling Green Valley Hospital. This is Lina. How may I help you?
+Support Agent: Hello? Are you able to hear me?
+Support Agent: I am not receiving any response. If you can hear me, please call us back when convenient.
+Support Agent: I will end the call now. Thank you for calling Green Valley Hospital.

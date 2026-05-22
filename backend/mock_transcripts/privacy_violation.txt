@@ -1,0 +1,11 @@
+Support Agent: Good afternoon, Green Valley Hospital. This is Nabila. How can I help?
+Patient: Hi, I am calling to ask whether my test results are ready.
+Support Agent: Sure. What is your name?
+Patient: My name is Rachel Moore.
+Support Agent: I see the results here. Before we continue, are you Rachel Moore from 17 Lake Street, born March 3, 1988?
+Patient: Yes, but I did not give you permission to say my address out loud. I am in a shared office.
+Support Agent: Oh, sorry. Your blood panel came back abnormal, and the doctor wants to discuss your medication.
+Patient: Please stop. I am not somewhere private.
+Support Agent: Well, it is already in your chart. You should call back later if you do not want people hearing it.
+Patient: That was not appropriate. Please just tell me who I should contact.
+Support Agent: Fine. Call the clinic line tomorrow morning and ask for Dr. Evans.

@@ -1,0 +1,9 @@
+Support Agent: Thank you for calling Green Valley Hospital. This is Omar. How may I help you?
+Patient: I started a new heart medication yesterday, and now I have chest pressure and trouble breathing.
+Support Agent: I am sorry you are experiencing that. Are you alone right now?
+Patient: Yes, and I feel dizzy when I stand.
+Support Agent: Because you are having chest pressure, breathing difficulty, and dizziness, this could be urgent. Please call emergency services now, or I can stay on the line while you do.
+Patient: Should I wait for my doctor to call me back?
+Support Agent: No. Please seek emergency care immediately. If you can, unlock your door and sit down while calling emergency services.
+Patient: Okay, I am calling now.
+Support Agent: I will stay on the line until you are connected. Your safety is the priority.

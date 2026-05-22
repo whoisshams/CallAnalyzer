@@ -56,7 +56,7 @@ This app uses a **coordinator** (the hub) that sends work to **three specialist 
 | Python 3.11+                                | [python.org](https://www.python.org/downloads/)                                                    |
 | Node.js 18+                                 | [nodejs.org](https://nodejs.org/)                                                                  |
 | Anthropic API key                           | [console.anthropic.com](https://console.anthropic.com/)                                            |
-| Whisper server *(optional, for MP3 upload)* | [whisper.cpp](https://github.com/ggerganov/whisper.cpp) or any OpenAI-compatible server on `:9000` |
+| Whisper server *(optional, for MP3 upload)* | Run a Docker container exposing an OpenAI-compatible endpoint on `:9000` — e.g. `docker run -p 9000:9000 onerahmet/openai-whisper-asr-webservice` — or any other [whisper.cpp](https://github.com/ggerganov/whisper.cpp) compatible server |
 
 
 ---
@@ -75,8 +75,15 @@ source .venv/bin/activate        # Windows: .venv\Scripts\activate
 # 3. Backend dependencies
 cd backend && pip install -r requirements.txt
 
-# 4. API key
-echo "ANTHROPIC_API_KEY=sk-ant-..." > backend/.env
+# 4. Environment variables — create backend/.env with the following:
+
+ANTHROPIC_API_KEY=sk-ant-...       (used by all AI reviewers)
+OPENAI_API_KEY=sk-...              (for whisper audio transcription)
+DEMO_MODE="true" or "false" depending on if you have api keys                   
+                                       
+
+# Example minimal setup (text-only, no audio upload):
+echo "ANTHROPIC_API_KEY=sk-ant-...\nDEMO_MODE=true" > backend/.env
 
 # 5. Frontend dependencies
 cd ../frontend && npm install
