@@ -94,7 +94,7 @@ N/A	APIConnectionError'''
 )
 
 async def analyze_agent_tone_tool(args):
-    print("  -> analyze_agent_tone called", flush=True)
+    # print("  -> analyze_agent_tone called", flush=True)
     transcript = args.get("transcript", "").strip()
     if not transcript:
         # Empty transcript (bad input)
@@ -120,7 +120,7 @@ async def analyze_agent_tone_tool(args):
     {"transcript": str},
 )
 async def analyze_patient_tone_tool(args):
-    print("  -> analyze_patient_tone called", flush=True)
+    # print("  -> analyze_patient_tone called", flush=True)
     transcript = args.get("transcript", "").strip()
     if not transcript:
         return {"content": [{"type": "text", "text": json.dumps({
@@ -146,7 +146,7 @@ async def analyze_patient_tone_tool(args):
     {"transcript": str},
 )
 async def analyze_call_outcome_tool(args):
-    print("  -> analyze_call_outcome called", flush=True)
+    # print("  -> analyze_call_outcome called", flush=True)
     transcript = args.get("transcript", "").strip()
     if not transcript:
         return {"content": [{"type": "text", "text": json.dumps({
@@ -255,11 +255,11 @@ async def validate_tool_output(hook_input: dict[str, Any], *_: Any) -> dict[str,
     if not reviewer:
         return {}
 
-    print(f"  [hook] {reviewer} hook_input keys: {list(hook_input.keys())}", flush=True)
-    print(f"  [hook] {reviewer} tool_response type: {type(hook_input.get('tool_response')).__name__}", flush=True)
-    print(f"  [hook] {reviewer} tool_response: {hook_input.get('tool_response')!r}", flush=True)
+    # print(f"  [hook] {reviewer} hook_input keys: {list(hook_input.keys())}", flush=True)
+    # print(f"  [hook] {reviewer} tool_response type: {type(hook_input.get('tool_response')).__name__}", flush=True)
+    # print(f"  [hook] {reviewer} tool_response: {hook_input.get('tool_response')!r}", flush=True)
     raw_text = _get_tool_text(hook_input.get("tool_response"))
-    print(f"  [hook] {reviewer} extracted raw_text: {raw_text!r}", flush=True)
+    # print(f"  [hook] {reviewer} extracted raw_text: {raw_text!r}", flush=True)
 
     try:
         data = json.loads(raw_text) if raw_text else None
@@ -340,7 +340,7 @@ async def _run_coordinator(prompt: str) -> dict[str, Any]:
     structured = None
     session_id = None
     async for message in query(prompt=prompt, options=options):# options contains the coordinator agent definition
-        print(f"\n[coordinator message] type={type(message).__name__} | {message}")
+        # print(f"\n[coordinator message] type={type(message).__name__} | {message}")
         if session_id is None:
             session_id = getattr(message, "session_id", None)
         # SDK populates structured_output (not text) when output_format=json_schema is set.
@@ -348,7 +348,7 @@ async def _run_coordinator(prompt: str) -> dict[str, Any]:
         if isinstance(candidate, dict):
             structured = candidate
 
-    print(f"Session ID: {session_id}")
+    # print(f"Session ID: {session_id}")
 
     if structured is None:
         raise RuntimeError("Coordinator did not return a structured JSON result.")

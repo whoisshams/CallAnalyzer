@@ -34,7 +34,8 @@ This app uses a **coordinator** (the hub) that sends work to **three specialist 
 - **More API calls = more tokens** than a single agent reading the transcript once
 - For **short, simple calls**, one agent with one JSON output is often **cheaper and faster**, with a small drop in depth per category
 
-**Rule of thumb:** hub-and-spoke is a good fit when the conversation is big enough that splitting the work helps quality. For small transcripts, a single direct agent is usually the better choice on cost.
+**Rule of thumb:** 
+This project intentionally demonstrates a scalable multi-agent QA pattern. In production, I would route short or low-risk calls through a cheaper single-pass analyzer, and reserve the multi-agent workflow for longer, higher-risk, or compliance-sensitive calls where deeper review is worth the extra cost.
 
 ---
 

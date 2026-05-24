@@ -1,0 +1,26 @@
+{
+  "id": "privacy_violation",
+  "transcript": "Support Agent: Good afternoon, Green Valley Hospital. This is Nabila. How can I help?\nPatient: Hi, I am calling to ask whether my test results are ready.\nSupport Agent: Sure. What is your name?\nPatient: My name is Rachel Moore.\nSupport Agent: I see the results here. Before we continue, are you Rachel Moore from 17 Lake Street, born March 3, 1988?\nPatient: Yes, but I did not give you permission to say my address out loud. I am in a shared office.\nSupport Agent: Oh, sorry. Your blood panel came back abnormal, and the doctor wants to discuss your medication.\nPatient: Please stop. I am not somewhere private.\nSupport Agent: Well, it is already in your chart. You should call back later if you do not want people hearing it.\nPatient: That was not appropriate. Please just tell me who I should contact.\nSupport Agent: Fine. Call the clinic line tomorrow morning and ask for Dr. Evans.",
+  "expected_ranges": {
+    "agent_tone_reviewer": {
+      "professionalism": [1,3],
+      "empathy": [3,6],
+      "clarity": [5,8],
+      "helpfulness": [5,10],
+      "tension_handling": [5,10]
+    },
+    "patient_tone_reviewer": {
+      "respectfulness": [7,10],
+      "clarity": [7,10],
+      "cooperation": [7,10],
+      "emotional_regulation": [7,10]
+    },
+    "call_outcome_reviewer": {
+      "resolution_completeness": [7,10],
+      "followup_clarity": [7,10],
+      "privacy_handling": [1,3],
+      "safety_risk": [1,3],
+      "escalation_necessity": [1,3]
+    }
+  }
+}

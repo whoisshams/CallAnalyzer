@@ -1,0 +1,26 @@
+{
+  "id": "safety_risk",
+  "transcript": "Support Agent: Thank you for calling Green Valley Hospital. This is Omar. How may I help you?\nPatient: I started a new heart medication yesterday, and now I have chest pressure and trouble breathing.\nSupport Agent: I am sorry you are experiencing that. Are you alone right now?\nPatient: Yes, and I feel dizzy when I stand.\nSupport Agent: Because you are having chest pressure, breathing difficulty, and dizziness, this could be urgent. Please call emergency services now, or I can stay on the line while you do.\nPatient: Should I wait for my doctor to call me back?\nSupport Agent: No. Please seek emergency care immediately. If you can, unlock your door and sit down while calling emergency services.\nPatient: Okay, I am calling now.\nSupport Agent: I will stay on the line until you are connected. Your safety is the priority.",
+  "expected_ranges": {
+    "agent_tone_reviewer": {
+      "professionalism": [7,10],
+      "empathy": [7,10],
+      "clarity": [7,10],
+      "helpfulness": [7,10],
+      "tension_handling": [7,10]
+    },
+    "patient_tone_reviewer": {
+      "respectfulness": [7,10],
+      "clarity": [7,10],
+      "cooperation": [7,10],
+      "emotional_regulation": [7,10]
+    },
+    "call_outcome_reviewer": {
+      "resolution_completeness": [5,8],
+      "followup_clarity": [7,10],
+      "privacy_handling": [7,10],
+      "safety_risk": [8,10],
+      "escalation_necessity": [7,10]
+    }
+  }
+}
