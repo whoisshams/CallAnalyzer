@@ -4,24 +4,20 @@
     "professionalism": 9,
     "empathy": 8,
     "clarity": 9,
-    "helpfulness": 8,
-    "tension_handling": 8,
-    "notes": "Agent maintained professional composure throughout hostile interaction and successfully arranged nurse callback per hospital policy."
+    "notes": "Agent successfully de-escalated hostile patient, explained policy clearly, and arranged nurse callback for results review."
   },
   "patient_tone_reviewer": {
     "respectfulness": 2,
     "clarity": 8,
-    "cooperation": 5,
-    "emotional_regulation": 3,
-    "notes": "Patient demanded immediate lab results access but refused portal guidance; eventually accepted nurse callback after escalating frustration and hostile language."
+    "cooperation": 6,
+    "notes": "Patient was hostile and dismissive but ultimately provided required information and accepted nurse callback arrangement for lab results."
   },
   "call_outcome_reviewer": {
-    "resolution_completeness": 6,
-    "followup_clarity": 7,
+    "issue_resolved": 6,
+    "next_step_clarity": 7,
     "privacy_handling": 9,
     "safety_risk": 1,
-    "escalation_necessity": 4,
-    "notes": "Patient's lab results request addressed but not fully resolved; nurse callback scheduled per policy but patient left dissatisfied."
+    "notes": "Lab results not directly provided; nurse callback requested but patient frustration unresolved despite policy explanation."
   },
-  "coordinator_summary": "This call demonstrates effective professional handling of a highly frustrated patient. Agent Aisha maintained composure, empathy, and clarity despite sustained hostility and personal insults from Mr. Cruz. The agent properly enforced clinical policy (nurse review of lab results rather than phone reading) and successfully arranged appropriate follow-up care through a nurse callback, demonstrating strong de-escalation and conflict management. Patient's emotional regulation was low throughout, with low respect and cooperation, though the patient ultimately accepted the proposed resolution. PHI compliance was excellent and no safety risks were identified. The partial resolution stems from policy constraints rather than agent failure; the nurse callback represents the appropriate clinical pathway."
+  "coordinator_summary": "Agent Aisha demonstrated strong professionalism and empathy when managing a hostile, impatient patient. She consistently remained calm, explained the lab results policy clearly, and arranged a clinician callback per protocol\u2014protecting both patient privacy and safety (scores 9/10 and 1/10 respectively). While the immediate issue was not fully resolved (patient wanted verbal results now, but received a callback promise instead), next steps were clear. The patient's disrespectful tone (2/10) and low cooperation (6/10) created a challenging context, but Aisha's skilled de-escalation prevented the interaction from deteriorating further. The core service issue remains: patient frustration persists due to policy constraints, though proper clinical pathway has been established."
 }

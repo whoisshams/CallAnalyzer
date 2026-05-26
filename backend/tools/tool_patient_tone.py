@@ -13,6 +13,7 @@ PATIENT_TONE_TOOL = build_score_submission_tool(
 )
 
 
+
 def analyze_patient_tone(transcript: str) -> str:
     """
     Ask Claude to score the PATIENT's tone and return a JSON string.
@@ -30,13 +31,15 @@ def analyze_patient_tone(transcript: str) -> str:
                 "Use the submit_patient_tone_scores tool to submit the final scores; do not answer in prose. "
                 "Required fields and scoring rubric: "
                 "respectfulness (int 1-10): politeness and courtesy toward the agent; "
-                "1=abusive or hostile, 10=consistently respectful. "
+                "1=abusive, threatening, or insulting language, 3=rude and dismissive but no explicit abuse, "
+                "5=neutral in tone but occasionally impatient or blunt, 10=consistently respectful and polite. "
                 "clarity (int 1-10): how clearly the patient communicated their issue or needs; "
-                "1=incoherent or contradictory, 10=clear and well-articulated. "
+                "1=incoherent or contradictory — the agent cannot understand the request, "
+                "3=vague or incomplete — key details are missing, "
+                "5=understandable but required the agent to ask follow-up questions, 10=clear and well-articulated from the start. "
                 "cooperation (int 1-10): willingness to follow agent instructions and provide needed information; "
-                "1=completely uncooperative, 10=fully cooperative. "
-                "emotional_regulation (int 1-10): ability to manage emotions during the call; "
-                "1=highly dysregulated or volatile, 5=occasional emotional outbursts but mostly manageable, 10=calm and composed throughout. "
+                "1=refused all agent requests, 3=resisted most requests but complied under pressure, "
+                "5=partially cooperative — followed some instructions but resisted others, 10=fully cooperative throughout. "
                 "notes (string, 10-30 words): one sentence citing the single most significant outcome or unresolved issue from the call. "
                 "If the patient has no dialogue in the transcript, score all fields 1 and set "
                 "notes to 'No patient speech found.'"

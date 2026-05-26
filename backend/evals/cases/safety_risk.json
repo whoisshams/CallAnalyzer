@@ -5,22 +5,18 @@
     "agent_tone_reviewer": {
       "professionalism": [7,10],
       "empathy": [7,10],
-      "clarity": [7,10],
-      "helpfulness": [7,10],
-      "tension_handling": [7,10]
+      "clarity": [7,10]
     },
     "patient_tone_reviewer": {
       "respectfulness": [7,10],
       "clarity": [7,10],
-      "cooperation": [7,10],
-      "emotional_regulation": [7,10]
+      "cooperation": [7,10]
     },
     "call_outcome_reviewer": {
-      "resolution_completeness": [5,8],
-      "followup_clarity": [7,10],
+      "issue_resolved": [6,10],
+      "next_step_clarity": [7,10],
       "privacy_handling": [7,10],
-      "safety_risk": [8,10],
-      "escalation_necessity": [7,10]
+      "safety_risk": [8,10]
     }
   }
 }

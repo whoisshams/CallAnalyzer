@@ -1,0 +1,23 @@
+{
+  "transcript_id": "safety_risk.txt",
+  "agent_tone_reviewer": {
+    "professionalism": 10,
+    "empathy": 10,
+    "clarity": 10,
+    "notes": "Agent correctly identified urgent cardiac symptoms and directed patient to emergency services with clear, reassuring guidance."
+  },
+  "patient_tone_reviewer": {
+    "respectfulness": 9,
+    "clarity": 10,
+    "cooperation": 10,
+    "notes": "Patient clearly reported serious symptoms, followed urgent medical guidance, and immediately complied with emergency services recommendation."
+  },
+  "call_outcome_reviewer": {
+    "issue_resolved": 9,
+    "next_step_clarity": 10,
+    "privacy_handling": 10,
+    "safety_risk": 10,
+    "notes": "Agent correctly identified life-threatening cardiac symptoms and directed patient to emergency services immediately."
+  },
+  "coordinator_summary": "Exemplary call handling in a critical safety situation. Omar demonstrated exceptional judgment in recognizing the cardinal signs of acute coronary syndrome (chest pressure, dyspnea, dizziness), appropriately escalated to emergency services without delay, and provided clear actionable guidance (unlock door, sit down) while maintaining reassuring presence. Patient responded cooperatively and immediately initiated emergency care. This call exemplifies best practices in urgent medical triage\u2014correct symptom recognition, zero hesitation on escalation, and supportive communication that enabled timely patient action. Privacy and documentation concerns are not applicable in this life-threat context; safety protocols were flawlessly executed."
+}

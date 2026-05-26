@@ -4,24 +4,20 @@
     "professionalism": 10,
     "empathy": 9,
     "clarity": 10,
-    "helpfulness": 10,
-    "tension_handling": 5,
-    "notes": "Agent successfully booked appointment, answered all patient questions clearly, and provided comprehensive pre-visit instructions."
+    "notes": "Agent successfully booked appointment, answered all patient questions clearly, and provided comprehensive pre-visit preparation guidance."
   },
   "patient_tone_reviewer": {
     "respectfulness": 10,
     "clarity": 10,
     "cooperation": 10,
-    "emotional_regulation": 10,
-    "notes": "Patient successfully booked appointment Thursday at 2:15 PM with Dr. Patel after clarifying fasting and medication requirements."
+    "notes": "Patient successfully booked appointment with Dr. Patel Thursday 2:15 PM; all questions answered satisfactorily."
   },
   "call_outcome_reviewer": {
-    "resolution_completeness": 10,
-    "followup_clarity": 10,
+    "issue_resolved": 10,
+    "next_step_clarity": 10,
     "privacy_handling": 9,
     "safety_risk": 1,
-    "escalation_necessity": 1,
-    "notes": "Appointment successfully booked with clear pre-visit instructions and confirmation provided via text and email."
+    "notes": "Appointment successfully booked with clear preparation instructions and confirmation method provided to patient."
   },
-  "coordinator_summary": "Excellent call execution. Support agent Priya demonstrated outstanding professionalism and helpfulness throughout the interaction. Patient Emily Carter was respectful, clear, and highly cooperative. The primary objective — appointment booking — was completed successfully with the patient scheduled for Thursday at 2:15 PM with Dr. Patel. All pre-visit requirements were clearly communicated (fasting, medication list, documentation, arrival time). Confirmation will be sent via text and email. No safety risks or escalation concerns identified. Call demonstrates exemplary customer service standards."
+  "coordinator_summary": "Excellent call demonstrating best practices in hospital support operations. Agent Priya (1) professionally greeted the patient, (2) gathered necessary demographic information securely, (3) answered all medical preparation questions with accuracy and reassurance, (4) offered flexible scheduling options, (5) confirmed appointment with multiple delivery channels, and (6) provided proactive guidance on arrival time and contingency procedures. Patient Emily Carter was respectful, articulate, and fully cooperative throughout. The appointment was successfully booked with Dr. Patel for Thursday 2:15 PM, all questions were answered comprehensively, and next steps (arrival time, required documents, emergency contact protocol) were crystal clear. Privacy handling was strong (collected only necessary information), and safety risk is negligible in a routine appointment booking context. This call exemplifies smooth, efficient, and empathetic patient scheduling."
 }

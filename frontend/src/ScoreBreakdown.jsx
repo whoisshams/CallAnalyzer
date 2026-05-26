@@ -33,30 +33,26 @@ function ScoreBreakdown({ result }) {
       <div className="stats-groups">
         <div className="stats-group">
           <p className="stats-group__label">Agent Tone</p>
-          <ScoreBar label="Professionalism"  score={agent.professionalism} />
-          <ScoreBar label="Empathy"          score={agent.empathy} />
-          <ScoreBar label="Clarity"          score={agent.clarity} />
-          <ScoreBar label="Helpfulness"      score={agent.helpfulness} />
-          <ScoreBar label="Tension Handling" score={agent.tension_handling} />
+          <ScoreBar label="Professionalism" score={agent.professionalism} />
+          <ScoreBar label="Empathy"         score={agent.empathy} />
+          <ScoreBar label="Clarity"         score={agent.clarity} />
           {agent.notes && <p className="stats-group__notes">{agent.notes}</p>}
         </div>
 
         <div className="stats-group">
           <p className="stats-group__label">Patient Tone</p>
-          <ScoreBar label="Respectfulness"      score={patient.respectfulness} />
-          <ScoreBar label="Clarity"             score={patient.clarity} />
-          <ScoreBar label="Cooperation"         score={patient.cooperation} />
-          <ScoreBar label="Emotional Regulation" score={patient.emotional_regulation} />
+          <ScoreBar label="Respectfulness" score={patient.respectfulness} />
+          <ScoreBar label="Clarity"        score={patient.clarity} />
+          <ScoreBar label="Cooperation"    score={patient.cooperation} />
           {patient.notes && <p className="stats-group__notes">{patient.notes}</p>}
         </div>
 
         <div className="stats-group">
           <p className="stats-group__label">Call Outcome</p>
-          <ScoreBar label="Resolution"        score={outcome.resolution_completeness} />
-          <ScoreBar label="Follow-Up Clarity" score={outcome.followup_clarity} />
+          <ScoreBar label="Issue Resolved"    score={outcome.issue_resolved} />
+          <ScoreBar label="Next-Step Clarity" score={outcome.next_step_clarity} />
           <ScoreBar label="Privacy Handling"  score={outcome.privacy_handling} />
           <ScoreBar label="Safety Risk"       score={outcome.safety_risk} invert />
-          <ScoreBar label="Escalation Needed" score={outcome.escalation_necessity} invert />
           {outcome.notes && <p className="stats-group__notes">{outcome.notes}</p>}
         </div>
       </div>

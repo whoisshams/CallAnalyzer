@@ -1,0 +1,23 @@
+{
+  "transcript_id": "no_agent_speech.txt",
+  "agent_tone_reviewer": {
+    "professionalism": 1,
+    "empathy": 1,
+    "clarity": 1,
+    "notes": "No agent speech found."
+  },
+  "patient_tone_reviewer": {
+    "respectfulness": 7,
+    "clarity": 9,
+    "cooperation": 6,
+    "notes": "Patient ended call after waiting several minutes with no agent response; rescheduling need unresolved."
+  },
+  "call_outcome_reviewer": {
+    "issue_resolved": 1,
+    "next_step_clarity": 1,
+    "privacy_handling": 10,
+    "safety_risk": 1,
+    "notes": "Patient hung up without speaking to agent; appointment reschedule request completely unresolved."
+  },
+  "coordinator_summary": "Critical call failure: No agent answered or responded to the patient's call. The patient clearly stated their need (appointment reschedule), remained respectful and articulate throughout, but became frustrated after several minutes of waiting with only background noise. The issue was entirely unresolved, with no next steps provided. While privacy handling was adequate (no sensitive data shared), the call represents a complete service breakdown\u2014the patient abandoned the interaction without reaching an agent. Immediate action needed: audit call routing/assignment system to prevent future missed connections."
+}

@@ -1,0 +1,23 @@
+{
+  "transcript_id": "no_patient_speech.txt",
+  "agent_tone_reviewer": {
+    "professionalism": 9,
+    "empathy": 7,
+    "clarity": 9,
+    "notes": "Agent handled no-response call professionally with appropriate check-ins and courteous close; no issues resolved."
+  },
+  "patient_tone_reviewer": {
+    "respectfulness": 1,
+    "clarity": 1,
+    "cooperation": 1,
+    "notes": "No patient speech found."
+  },
+  "call_outcome_reviewer": {
+    "issue_resolved": 1,
+    "next_step_clarity": 2,
+    "privacy_handling": 10,
+    "safety_risk": 1,
+    "notes": "No patient response received; call ended without any issue identification or resolution."
+  },
+  "coordinator_summary": "Call failed to establish patient contact. Agent Lina performed professionally, greeting properly, attempting connection, and courteously ending the call. With no patient speech, there was no opportunity to assess patient cooperation or resolve issues. Privacy was fully maintained. Patient should be advised to retry or follow up through alternative channels."
+}

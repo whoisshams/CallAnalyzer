@@ -16,6 +16,7 @@ What this file does, top to bottom:
 
 from __future__ import annotations
 
+import argparse
 import asyncio
 import json
 import os
@@ -85,9 +86,9 @@ N/A	APIConnectionError'''
         "Input: raw transcript text with speaker turns (e.g. 'Agent: ... Patient: ...'). "
         "Do NOT pass an empty string. Do NOT use this tool to assess the patient. "
         "Output: Returns a JSON object with integer scores 1–10 for: professionalism, empathy, "
-        "clarity, helpfulness, tension_handling, and a non-empty 'notes' string. "
+        "clarity, and a non-empty 'notes' string. "
         "Example output: {\"professionalism\": 8, \"empathy\": 7, \"clarity\": 9, "
-        "\"helpfulness\": 8, \"tension_handling\": 6, \"notes\": \"Agent stayed calm.\"}. "
+        "\"notes\": \"Agent stayed calm and explained the options clearly.\"}. "
         "Returns a JSON parse error description if the model output is malformed."
     ),
     {"transcript": str},
@@ -112,9 +113,9 @@ async def analyze_agent_tone_tool(args):
         "Input: raw transcript text with speaker turns (e.g. 'Agent: ... Patient: ...'). "
         "Do NOT pass an empty string. Do NOT use this tool to assess the support agent. "
         "Returns a JSON object with integer scores 1–10 for: respectfulness, clarity, "
-        "cooperation, emotional_regulation, and a non-empty 'notes' string. "
+        "cooperation, and a non-empty 'notes' string. "
         "Example output: {\"respectfulness\": 6, \"clarity\": 7, \"cooperation\": 5, "
-        "\"emotional_regulation\": 4, \"notes\": \"Patient was agitated.\"}. "
+        "\"notes\": \"Patient was polite but a little vague.\"}. "
         "Returns a JSON parse error description if the model output is malformed."
     ),
     {"transcript": str},
@@ -136,10 +137,10 @@ async def analyze_patient_tone_tool(args):
         "Assess the overall outcome of a hospital call, evaluating both parties together. "
         "Input: raw transcript text with speaker turns (e.g. 'Agent: ... Patient: ...'). "
         "Do NOT pass an empty string. Use this tool only after both agent and patient tones have been scored. "
-        "Returns a JSON object with integer scores 1–10 for: resolution_completeness, followup_clarity, "
-        "privacy_handling, safety_risk, escalation_necessity, and a non-empty 'notes' string. "
-        "Example output: {\"resolution_completeness\": 7, \"followup_clarity\": 8, "
-        "\"privacy_handling\": 10, \"safety_risk\": 2, \"escalation_necessity\": 3, "
+        "Returns a JSON object with integer scores 1–10 for: issue_resolved, next_step_clarity, "
+        "privacy_handling, safety_risk, and a non-empty 'notes' string. "
+        "Example output: {\"issue_resolved\": 7, \"next_step_clarity\": 8, "
+        "\"privacy_handling\": 10, \"safety_risk\": 2, "
         "\"notes\": \"Issue resolved; patient privacy was fully protected.\"}. "
         "Returns a JSON parse error description if the model output is malformed."
     ),
@@ -177,7 +178,7 @@ agents = {
         maxTurns=3,  # safety cap: stop retrying after 3 attempts
         description=(
             "QA reviewer responsible ONLY for the support agent's tone. "
-            "Scores professionalism, empathy, clarity, helpfulness, and de-escalation. "
+            "Scores professionalism, empathy, and clarity. "
             "Does NOT assess the patient."
         ),
         prompt=(
@@ -194,7 +195,7 @@ agents = {
         maxTurns=3,  # safety cap: stop retrying after 3 attempts
         description=(
             "QA reviewer responsible ONLY for the patient's tone. "
-            "Scores respectfulness, clarity, cooperation, emotional regulation, and escalation intensity. "
+            "Scores respectfulness, clarity, and cooperation. "
             "Does NOT assess the support agent."
         ),
         prompt=(
@@ -211,8 +212,8 @@ agents = {
         maxTurns=3,  # safety cap: stop retrying after 3 attempts
         description=(
             "QA reviewer responsible for the overall call outcome and compliance. "
-            "Scores resolution completeness, next-step clarity, PHI compliance, safety risk, "
-            "and escalation necessity across both parties."
+            "Scores whether the issue was resolved, next-step clarity, privacy handling, "
+            "and safety risk across both parties."
         ),
         prompt=(
             "You are a hospital QA reviewer assessing the overall call outcome and compliance. "
@@ -359,11 +360,11 @@ async def _run_coordinator(prompt: str) -> dict[str, Any]:
 # Per-reviewer progress messages used by the streaming endpoint.
 _REVIEWER_PROGRESS = {
     "mcp__qa_tools__analyze_agent_tone":
-        "Agent tone reviewer analyzing professionalism, empathy, clarity, helpfulness, and de-escalation.",
+        "Agent tone reviewer analyzing professionalism, empathy, and clarity.",
     "mcp__qa_tools__analyze_patient_tone":
-        "Patient tone reviewer analyzing respectfulness, clarity, cooperation, emotional regulation, and escalation intensity.",
+        "Patient tone reviewer analyzing respectfulness, clarity, and cooperation.",
     "mcp__qa_tools__analyze_call_outcome":
-        "Call outcome reviewer checking resolution, next-step clarity, PHI compliance, safety risk, and escalation necessity.",
+        "Call outcome reviewer checking issue resolution, next-step clarity, privacy handling, and safety risk.",
 }
 
 
@@ -454,11 +455,23 @@ async def process_transcript(file_path: Path) -> None:
 
 
 async def main() -> None:
-    transcripts = sorted((_BACKEND_ROOT / "mock_transcripts").glob("*.txt"))
+    parser = argparse.ArgumentParser(description="Run QA analysis on sample transcripts.")
+    parser.add_argument("--case", help="Run one transcript by name, e.g. no_patient_speech")
+    args = parser.parse_args()
+
+    transcripts_dir = _BACKEND_ROOT / "mock_transcripts"
+    if args.case:
+        case_name = args.case if args.case.endswith(".txt") else f"{args.case}.txt"
+        transcripts = [transcripts_dir / case_name]
+    else:
+        transcripts = sorted(transcripts_dir.glob("*.txt"))
+
     if not transcripts:
         raise RuntimeError("No transcripts found in backend/mock_transcripts/")
 
     for file_path in transcripts:
+        if not file_path.is_file():
+            raise FileNotFoundError(f"No transcript found at {file_path}")
         await process_transcript(file_path)
 
 

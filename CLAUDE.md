@@ -35,10 +35,10 @@ This is a **hub-and-spoke multi-agent QA system** for analyzing hospital support
 1. `main()` in `backend/agent/hub_spoke.py` finds all `.txt` transcripts in `backend/mock_transcripts/`
 2. For each transcript, a **coordinator agent** receives the full transcript text
 3. The coordinator dispatches to three **specialized subagents** via MCP tool calls (can run in parallel):
-  - `mcp__qa_tools__analyze_agent_tone` — evaluates support agent professionalism, empathy, clarity, helpfulness, de-escalation
-  - `mcp__qa_tools__analyze_patient_tone` — evaluates patient respectfulness, clarity, cooperation, emotional regulation, escalation
-  - `mcp__qa_tools__analyze_call_outcome` — assesses resolution, next-step clarity, PHI compliance, safety risk, escalation necessity
-4. Each tool calls `claude-sonnet-4-20250514` with a specialized system prompt and returns a JSON string with five 1–10 integer scores plus a `notes` field
+  - `mcp__qa_tools__analyze_agent_tone` — evaluates support agent professionalism, empathy, clarity
+  - `mcp__qa_tools__analyze_patient_tone` — evaluates patient respectfulness, clarity, cooperation
+  - `mcp__qa_tools__analyze_call_outcome` — assesses whether the issue was resolved, next-step clarity, privacy handling, safety risk
+4. Each tool calls `claude-haiku-4-5-20251001` with a specialized system prompt and returns a JSON string with 1–10 integer scores plus a `notes` field
 5. A `PostToolUse` hook in the coordinator validates each tool's JSON immediately; malformed or missing fields trigger retry feedback to the subagent
 6. The coordinator assembles a final report, validated against `JSON_SCHEMA` from `backend/agent/schema.py`, and writes it to `backend/output/{transcript_stem}.json`
 
@@ -59,9 +59,9 @@ This is a **hub-and-spoke multi-agent QA system** for analyzing hospital support
 ```json
 {
   "transcript_id": "string",
-  "agent_tone_reviewer":   { "professionalism": 1-10, "empathy": 1-10, "clarity": 1-10, "helpfulness": 1-10, "de_escalation": 1-10, "notes": "string" },
-  "patient_tone_reviewer": { "respectfulness": 1-10, "clarity": 1-10, "cooperation": 1-10, "emotional_regulation": 1-10, "escalation_intensity": 1-10, "notes": "string" },
-  "call_outcome_reviewer": { "resolution": 1-10, "next_step_clarity": 1-10, "phi_compliance": 1-10, "safety_risk": 1-10, "escalation_necessity": 1-10, "notes": "string" },
+  "agent_tone_reviewer":   { "professionalism": 1-10, "empathy": 1-10, "clarity": 1-10, "notes": "string" },
+  "patient_tone_reviewer": { "respectfulness": 1-10, "clarity": 1-10, "cooperation": 1-10, "notes": "string" },
+  "call_outcome_reviewer": { "issue_resolved": 1-10, "next_step_clarity": 1-10, "privacy_handling": 1-10, "safety_risk": 1-10, "notes": "string" },
   "coordinator_summary": "string"
 }
 ```
@@ -87,7 +87,7 @@ Tools return structured error JSON (not exceptions) with `errorCategory`, `isRet
 - **Deterministic final safety gate**: The pipeline does not rely only on model behavior; Python validation rejects invalid reports before they are saved.
 - **Clear separation of concerns**: Transcript loading, agent orchestration, reviewer scoring, schema validation, and output writing live in distinct modules.
 - **Debuggable pipeline**: Hook logs and structured errors make it easier to identify whether a failure came from the model, tool, schema, or API layer.
-- **Healthcare QA domain modeling**: The scoring dimensions map to realistic hospital support QA concerns such as professionalism, empathy, cooperation, PHI compliance, safety risk, and escalation need.
+- **Healthcare QA domain modeling**: The scoring dimensions map to realistic hospital support QA concerns such as professionalism, empathy, cooperation, privacy handling, and safety risk.
 
 ### Short Development Summary
 **Every tool in the chain has one specific job:** React organizes your UI code. TypeScript prevents bugs while you write. Tailwind speeds up styling. Vite compiles everything and serves it during development. npm manages your libraries. Next.js adds routing and structure. Vercel hosts the compiled output. Your Python backend handles all server-side logic. The Anthropic SDK connects your Python code to Claude. HTTP and JSON are the language all of these pieces use to talk to each other.

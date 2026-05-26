@@ -114,6 +114,24 @@ cd backend && python agent/hub_spoke.py
 # Reports written to backend/output/*.json
 ```
 
+To run one sample transcript:
+
+```bash
+cd backend && python agent/hub_spoke.py --case no_patient_speech
+# Writes backend/output/no_patient_speech.json
+```
+## Evaluation
+
+To test outputs against expected score ranges for each reviewer, use the eval script:
+
+```bash
+python3 backend/evals/run_evals.py bad_agent     # Evaluate a single case (e.g., bad_agent)
+python3 backend/evals/run_evals.py --all         # Evaluate all test cases in backend/evals/cases/
+```
+
+This script compares the generated reports in `backend/output/` against the expected ranges, reporting any mismatches.
+
+
 ---
 
 ## Contributing

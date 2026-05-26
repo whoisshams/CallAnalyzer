@@ -151,8 +151,6 @@ And `bad_agent.json` after the fix produced real scores:
     "professionalism": 2,
     "empathy": 1,
     "clarity": 3,
-    "helpfulness": 2,
-    "de_escalation": 2,
     "notes": "Agent was dismissive, rude, and unhelpful throughout the call..."
   },
   ...

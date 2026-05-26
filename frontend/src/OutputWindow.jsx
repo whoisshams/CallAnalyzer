@@ -26,8 +26,8 @@ function buildSupportReview(result) {
     agent.professionalism,
     agent.empathy,
     agent.clarity,
-    agent.helpfulness,
-    agent.tension_handling,
+    outcome.issue_resolved,
+    outcome.next_step_clarity,
   ]
 
   const rawScore = supportFields.reduce((sum, score) => sum + score, 0) / supportFields.length
@@ -37,7 +37,7 @@ function buildSupportReview(result) {
   if (support_score < 7) reasons.push('support_score_below_7')
   if (agent.professionalism < 6) reasons.push('professionalism_below_6')
   if (agent.empathy < 6) reasons.push('empathy_below_6')
-  if (agent.helpfulness < 6) reasons.push('helpfulness_below_6')
+  if (outcome.issue_resolved < 6) reasons.push('issue_resolved_below_6')
   if (outcome.privacy_handling < 9) reasons.push('privacy_handling_below_9')
   if (outcome.safety_risk >= 7) reasons.push('safety_risk_at_or_above_7')
 

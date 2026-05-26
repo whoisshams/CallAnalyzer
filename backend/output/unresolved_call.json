@@ -1,0 +1,23 @@
+{
+  "transcript_id": "unresolved_call.txt",
+  "agent_tone_reviewer": {
+    "professionalism": 2,
+    "empathy": 1,
+    "clarity": 6,
+    "notes": "Agent provided no actionable assistance, refused to check files or take contact information, and dismissed patient concerns after two-week wait."
+  },
+  "patient_tone_reviewer": {
+    "respectfulness": 9,
+    "clarity": 10,
+    "cooperation": 10,
+    "notes": "Patient remained calm and courteous throughout while seeking referral confirmation; no resolution or next steps provided."
+  },
+  "call_outcome_reviewer": {
+    "issue_resolved": 2,
+    "next_step_clarity": 1,
+    "privacy_handling": 10,
+    "safety_risk": 1,
+    "notes": "Patient's referral status unresolved; agent declined to check records, provide contact information, or arrange follow-up callback."
+  },
+  "coordinator_summary": "Critical QA failure. Agent Sam demonstrated severely deficient customer service by refusing to check the patient's file, declining to provide a callback number for follow-up, and offering no timeline or alternative resolution after the patient had already waited two weeks. While the patient was exemplary in tone and cooperation, the agent's lack of empathy (1/10) and professionalism (2/10) resulted in a completely unresolved outcome. The issue was not addressed (2/10), and crucially, the patient was left with zero clarity on next steps (1/10). This call violates basic service standards and requires agent retraining on patient advocacy and available resources."
+}

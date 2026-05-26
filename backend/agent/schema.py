@@ -21,23 +21,19 @@ REVIEWER_FIELDS = {
         "professionalism",
         "empathy",
         "clarity",
-        "helpfulness",
-        "tension_handling",
     ],
     "patient_tone_reviewer": [
         "respectfulness",
         "clarity",
         "cooperation",
-        "emotional_regulation",
     ],
     "call_outcome_reviewer": [
-        "resolution_completeness",
-        "followup_clarity",
+        "issue_resolved",
+        "next_step_clarity",
         "privacy_handling",
         "safety_risk",
-        "escalation_necessity",
     ],
-}
+}  
 
 # validate_reviewer checks if the reviewer block is valid
 def validate_reviewer(reviewer_key, payload):

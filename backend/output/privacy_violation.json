@@ -1,0 +1,23 @@
+{
+  "transcript_id": "privacy_violation.txt",
+  "agent_tone_reviewer": {
+    "professionalism": 4,
+    "empathy": 2,
+    "clarity": 7,
+    "notes": "Agent disclosed sensitive health information aloud despite patient's privacy concern and dismissed the issue rather than validating concern."
+  },
+  "patient_tone_reviewer": {
+    "respectfulness": 8,
+    "clarity": 9,
+    "cooperation": 9,
+    "notes": "Patient clearly communicated test result inquiry and appropriately asserted privacy concerns despite agent's insensitive handling."
+  },
+  "call_outcome_reviewer": {
+    "issue_resolved": 6,
+    "next_step_clarity": 7,
+    "privacy_handling": 2,
+    "safety_risk": 5,
+    "notes": "Agent disclosed patient's full address and sensitive test results despite patient's privacy objection in non-private setting."
+  },
+  "coordinator_summary": "Critical privacy violation identified. Agent Nabila disclosed patient Rachel Moore's full address (17 Lake Street) and sensitive test results (abnormal blood panel, medication discussion) aloud in a non-private shared office setting, directly against patient's explicit privacy objection. Agent further compounded the violation by dismissing patient concerns (\"it is already in your chart\"), showing poor empathy (2/10) and low professionalism (4/10). While call provided basic next-step clarity (Dr. Evans contact), the catastrophic privacy breach (2/10) and associated safety risk (5/10) represent serious HIPAA concerns. Patient demonstrated exemplary communication (respectfulness 8, clarity 9, cooperation 9) by appropriately asserting boundaries. Recommended actions: immediate retraining on privacy protocols, review call for compliance documentation, consider patient notification and remediation."
+}
